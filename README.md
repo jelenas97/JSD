@@ -20,14 +20,20 @@ Ukoliko je vrednost content type-a txt, atribut source predstavlja txt fajl iz k
 ~~~		
 
 entity ClassName1:
-	property1 : type1
-	property2 : type2
-		
+	properties:
+		property1 : type1 {id}
+		property2 : type2 {column}
+	operations:
+		(cr)       //kada zelimo samo create i read operacije, mogucnost i update i delete operacija
+			   //kreiraju se metode u servisu, kontroleru i repozitorijumu
 
 entity ClassName2:
-	property1 : [ClassName1]
-	property2 : type1
-
+	properties:
+		property1 : type1 {id} 
+		property2 : (ClassName1) {column}	//tip property-ja je jedan objekat
+		property3 : [ClassName1]		//tip property-ja je lista objekata; dodatno, upotrebom {} moguce definisati anotacije 
+	operations:
+		(cru)
 
 page PageName1: 
 	navbar(name : "Navbar1 name")
@@ -43,3 +49,9 @@ page PageName3:
 	content(type : txt, source : "path/to/file.txt")	
 			
 ~~~
+
+
+### Napomena
+
+Traziti sugestiju za definisanje crud operacija.
+Oznacavanje liste objekata i singl objekata.

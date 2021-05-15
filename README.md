@@ -4,54 +4,72 @@ Jezik bi kreirao kostur web aplikacije koja se zasniva na spring boot-u i jsp st
 ## Generisanje
 Struktura JSD bi se ugledala na strukturu YAML-a. Kao izvori podataka mogu se direktno navesti neki fajlovi poput CSV-a za tabele ili tekstualni fajlovi za paragrafe. U nastavku je opisana ideja i dat je primer jezika sa njegovom sintaksom.
 
-
 ## Ideja
 
-Upotrebom kljucne reci entity formiraju se jpa entiteti, odgovarajuci repozitorijumi i crud operacije unutar servisa.
+Upotrebom kljucne reci `entity` formiraju se JPA entiteti i odgovarajuci repozitorijumi.
 
-Stranice se mogu formirati na osnovu entiteta, csv fajlova ili tekstualnih fajlova. 
-Ako se kao content type u okviru stranice nadje csv fajl, na osnovu njega i njegovog headera kreiramo entitet. Naziv entiteta ce biti preuzet od samog naziva csv fajla. Sadrzaj csv fajla ce se iskoristiti za formiranje sql skripte koju korisnik moze da iskoristi za insertovanje podatka iz csv fajla u bazu. 
+Funkcije kontrolera i servisa mogu se specificirati u sekciji `operations` u okviru `entity`. A polja entiteta se specificiraju u `properties` sekciji. Ukoliko su neka polja, ili operacije sadržane u više entiteta, mogu se smestiti u odgovarajućoj sekciji `shared`.
 
-Ukoliko je vrednost content type-a entity, atribut source ce predstavljati entitet na koji "mapiramo" stranicu.
+Stranice se mogu formirati na osnovu entiteta i ključnih reči funkcije stranica.
 
-Ukoliko je vrednost content type-a txt, atribut source predstavlja txt fajl iz kog se preuzima tekst koji ce biti nalepljen kao tekstualni sadrzaj u okviru odgovarajuce stranice.
 
+## Primer
 
 ~~~		
 
-entity ClassName1:
+entity Medication:
 	properties:
-		property1 : type1 {id}
-		property2 : type2 {column}
-	operations:
-		(cr)       //kada zelimo samo create i read operacije, mogucnost i update i delete operacija
-			   //kreiraju se metode u servisu, kontroleru i repozitorijumu
+    {Column}
+		name > string
 
-entity ClassName2:
+entity Prescription:
 	properties:
-		property1 : type1 {id} 
-		property2 : (ClassName1) {column}	//tip property-ja je jedan objekat
-		property3 : [ClassName1]		//tip property-ja je lista objekata; dodatno, upotrebom {} moguce definisati anotacije 
-	operations:
-		(cru)
+    {Column}
+		prescribedAt > date
 
-page PageName1: 
-	navbar(name : "Navbar1 name")
-		- linkName1 : "link1"
-		- linkName2 : "link2"
-	content(type : csv, source : "path/to/file.csv")	//Moze biti csv, entity ili txt
+    {Column}
+    valid > bool
+
+    {ManyToMany}
+		medications > [Medication]
 	
-	
-page PageName2: 
-	content(type : entity, source : "ClassName1")
-	
-page PageName3: 
-	content(type : txt, source : "path/to/file.txt")	
+  operations:
+    updateValidity > id : long < bool
+    addMedication > medication : Medication < bool
+    removeMedication > id : long < bool
+
+entity Patient:
+	properties:
+    {Column}
+		name > string
+
+    {OneToOne}
+    prescription -> Prescription
+
+shared[Medication, Prescription, Patient]:
+  properties:
+    {ID}
+		id : long
+  
+  operations:
+    getById
+    getAll
+    create
+    update
+    delete
+
+pages[Medication, Prescription]:
+  view
+  add
+  edit
+
+pages[Patient]:
+  viewDelete
+  add
 			
 ~~~
 
 
-### Napomena
+### Elementi jezika
 
-Traziti sugestiju za definisanje crud operacija.
-Oznacavanje liste objekata i singl objekata.
+

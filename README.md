@@ -10,7 +10,7 @@ Upotrebom kljucne reci `entity` formiraju se JPA entiteti i odgovarajuci repozit
 
 Funkcije kontrolera i servisa mogu se specificirati u sekciji `operations` u okviru `entity`. A polja entiteta se specificiraju u `properties` sekciji. Ukoliko su neka polja, ili operacije sadržane u više entiteta, mogu se smestiti u odgovarajućoj sekciji `shared`.
 
-Stranice se mogu formirati na osnovu entiteta i ključnih reči funkcije stranica.
+Stranice se mogu formirati na osnovu entiteta i ključnih reči funkcije stranica u okviru sekcije `pages`.
 
 
 ## Primer
@@ -18,54 +18,54 @@ Stranice se mogu formirati na osnovu entiteta i ključnih reči funkcije stranic
 ~~~		
 
 entity Medication:
-	properties:
-    {Column}
+    properties:
+		{Column}
 		name > string
 
 entity Prescription:
 	properties:
-    {Column}
+    	{Column}
 		prescribedAt > date
 
-    {Column}
-    valid > bool
+		{Column}
+		valid > bool
 
-    {ManyToMany}
+		{ManyToMany}
 		medications > [Medication]
 	
-  operations:
-    updateValidity > id : long < bool
-    addMedication > medication : Medication < bool
-    removeMedication > id : long < bool
+  	operations:
+		updateValidity > id : long < bool
+		addMedication > medication : Medication < bool
+		removeMedication > id : long < bool
 
 entity Patient:
 	properties:
-    {Column}
+		{Column}
 		name > string
 
-    {OneToOne}
-    prescription -> Prescription
+		{OneToOne}
+		prescription -> Prescription
 
 shared[Medication, Prescription, Patient]:
-  properties:
-    {ID}
+  	properties:
+    	{ID}
 		id : long
   
-  operations:
-    getById
-    getAll
-    create
-    update
-    delete
+  	operations:
+		getById
+		getAll
+		create
+		update
+		delete
 
 pages[Medication, Prescription]:
-  view
-  add
-  edit
+	view
+	add
+ 	edit
 
 pages[Patient]:
-  viewDelete
-  add
+  	viewDelete
+  	add
 			
 ~~~
 

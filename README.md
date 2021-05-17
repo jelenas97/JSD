@@ -18,13 +18,13 @@ Stranice se mogu formirati na osnovu entiteta i ključnih reči funkcije stranic
 ~~~		
 
 entity Medication:
-    properties:
+	properties:
 		{Column}
 		name > string
 
 entity Prescription:
 	properties:
-    	{Column}
+		{Column}
 		prescribedAt > date
 
 		{Column}
@@ -33,7 +33,7 @@ entity Prescription:
 		{ManyToMany}
 		medications > [Medication]
 	
-  	operations:
+	operations:
 		updateValidity > id : long < bool
 		addMedication > medication : Medication < bool
 		removeMedication > id : long < bool
@@ -48,7 +48,7 @@ entity Patient:
 
 shared[Medication, Prescription, Patient]:
   	properties:
-    	{ID}
+		{ID}
 		id : long
   
   	operations:

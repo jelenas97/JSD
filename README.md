@@ -1,14 +1,13 @@
 # JSD za brzo generisanje "kostura" web aplikacije
 Jezik bi kreirao kostur web aplikacije koja se zasniva na spring boot-u i jsp stranicama.
 
-## Generisanje
-Struktura JSD bi se ugledala na strukturu YAML-a. Kao izvori podataka mogu se direktno navesti neki fajlovi poput CSV-a za tabele ili tekstualni fajlovi za paragrafe. U nastavku je opisana ideja i dat je primer jezika sa njegovom sintaksom.
-
 ## Ideja
 
-Upotrebom kljucne reci `entity` formiraju se JPA entiteti i odgovarajuci repozitorijumi.
+Struktura JSD bi se ugledala na strukturu YAML-a.
 
-Funkcije kontrolera i servisa mogu se specificirati u sekciji `operations` u okviru `entity`. A polja entiteta se specificiraju u `properties` sekciji. Ukoliko su neka polja, ili operacije sadržane u više entiteta, mogu se smestiti u odgovarajućoj sekciji `shared`.
+Upotrebom ključne reči `entity` formiraju se JPA entiteti i odgovarajući repozitorijumi.
+
+Funkcije kontrolera i servisa mogu se specificirati u sekciji `operations` u okviru `entity`. A polja entiteta se specificiraju u `properties` sekciji. Ukoliko su neka polja ili operacije sadržane u više entiteta mogu se smestiti u odgovarajućoj sekciji `shared`.
 
 Stranice se mogu formirati na osnovu entiteta i ključnih reči funkcije stranica u okviru sekcije `pages`.
 
@@ -34,9 +33,9 @@ entity Prescription:
 		medications > [Medication]
 	
 	operations:
-		updateValidity > id : long < bool
-		addMedication > medication : Medication < bool
-		removeMedication > id : long < bool
+		updateValidity < id : long > bool
+		addMedication < medication : Medication > bool
+		removeMedication < id : long > bool
 
 entity Patient:
 	properties:
@@ -44,17 +43,17 @@ entity Patient:
 		name > string
 
 		{OneToOne}
-		prescription -> Prescription
+		prescription > Prescription
 
 shared[Medication, Prescription, Patient]:
   	properties:
-		{ID}
-		id : long
+		{Id}
+		id > long
   
   	operations:
 		getById
 		getAll
-		create
+		save
 		update
 		delete
 
@@ -71,5 +70,31 @@ pages[Patient]:
 
 
 ### Elementi jezika
+- entity : ključna reč za klase modela
+- properties : ključna reč za atribute
+- operations : funkcije koje se nalaze unutar kontrolera i servisa za određene entitete
+- shared : sekcija gde se navode zajednički atributi i operacije koje poseduju određeni entiteti
+- pages : sekcija gde se navode vrste stranica koje će se generisati za određene entitete
+
+Atributi mogu biti sledećeg tipa:
+- `long`
+- `int`
+- `string`
+- `bool`
+- `date`
+
+Moguće vrednosti anotacija nad atributima su:
+- `Column`
+- `ManyToMany`
+- `OneToMany`
+- `OneToOne`
+- `Id`
+
+Moguće vrednosti za tipove stranica:
+- add
+- edit
+- view
+- viewDelete
+
 
 

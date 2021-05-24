@@ -33,9 +33,9 @@ entity Prescription:
 		medications > [Medication]
 	
 	operations:
-		updateValidity < id : long > bool
-		addMedication < medication : Medication > bool
-		removeMedication < id : long > bool
+		updateValidity(id : long) bool
+		addMedication(medication : Medication) bool
+		removeMedication(id : long) bool
 
 entity Patient:
 	properties:

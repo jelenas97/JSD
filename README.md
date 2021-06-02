@@ -96,5 +96,15 @@ Moguće vrednosti za tipove stranica:
 - view
 - viewDelete
 
+# Pokretanje
 
+Instalirati sve dependency-je navedene u `requirements.txt` pokretanjem komande:
 
+```bash
+pip install -r requirements.txt
+```
+
+```bash
+python entity_codegen.py
+python entity_test.py
+```

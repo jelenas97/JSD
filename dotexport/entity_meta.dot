@@ -1,0 +1,39 @@
+
+    digraph textX {
+    fontname = "Bitstream Vera Sans"
+    fontsize = 8
+    node[
+        shape=record,
+        style=filled,
+        fillcolor=aliceblue
+    ]
+    nodesep = 0.3
+    edge[dir=black,arrowtail=empty]
+
+
+1728645353504[ label="{EntityModel|}"]
+
+1728645362000[ label="{Entity|name: ID\l}"]
+
+1728645365776[ label="{Property|name: ID\l}"]
+
+1728645368608[ label="{*Type|}"]
+
+1728645316688[ label="{SimpleType|name: ID\l}"]
+
+
+
+1728645353504 -> 1728645316688[arrowtail=diamond, dir=both, headlabel="types 0..*"]
+1728645353504 -> 1728645362000[arrowtail=diamond, dir=both, headlabel="entities 1..*"]
+1728645362000 -> 1728645365776[arrowtail=diamond, dir=both, headlabel="properties 1..*"]
+1728645365776 -> 1728645368608[headlabel="type "]
+1728645368608 -> 1728645316688 [dir=back]
+1728645368608 -> 1728645362000 [dir=back]
+match_rules [ shape=plaintext, label=< <table>
+	<tr>
+		<td><b>Comment</b></td><td>\/\/.*$</td>
+	</tr>
+</table> >]
+
+
+}

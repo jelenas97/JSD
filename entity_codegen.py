@@ -1,10 +1,6 @@
-"""
-An example how to generate java code from textX model using jinja2
-template engine (http://jinja.pocoo.org/docs/dev/)
-"""
-from os import mkdir
-from os.path import exists, dirname, join, sep
-from pathlib import Path
+from os import makedirs
+from os.path import dirname, join, sep
+import glob
 import jinja2
 from entity_test import get_entity_mm
 
@@ -14,22 +10,29 @@ def main(debug=False):
 
     entity_mm = get_entity_mm(debug)
 
-    # Build Person model from person.ent file
-    person_model = entity_mm.model_from_file(join(this_folder, 'person.ent'))
+    # Build model from file
+    test_model = entity_mm.model_from_file(join(this_folder, 'test.ent'))
 
     def javatype(s):
         """
         Maps type names from PrimitiveType to Java.
         """
         return {
+            'long': 'long',
             'integer': 'int',
             'string': 'String'
         }.get(s.name, s.name)
 
-    # Create output folder
-    srcgen_folder = join(this_folder, 'srcgen')
-    if not exists(srcgen_folder):
-        mkdir(srcgen_folder)
+    output_root = "srcgen"
+
+    packages = [
+      "model",
+      "repository"
+    ]
+
+    # Create output folder structure
+    [makedirs(f"{output_root}/{package}", exist_ok=True)
+              for package in packages]
 
     # Initialize template engine.
     jinja_env = jinja2.Environment(
@@ -38,16 +41,18 @@ def main(debug=False):
         lstrip_blocks=True)
 
     # Register filter for mapping Entity type names to Java type names.
+    # Can be used for annotation types?
     jinja_env.filters['javatype'] = javatype
 
-    # Load Java template
-    template = jinja_env.get_template('templates/java.template')
+    for template in glob.glob("templates/*.template"):
+        # Load a template
+        jinja_template = jinja_env.get_template(template.replace("\\", "/"))
 
-    for entity in person_model.entities:
-        # For each entity generate java file
-        with open(join(srcgen_folder,
-                       "%s.java" % entity.name.capitalize()), 'w') as f:
-            f.write(template.render(entity=entity))
+        if "model" in template:
+          for entity in test_model.entities:
+              # For each entity generate file
+              with open(join(f"{output_root}/model", "%s.java" % entity.name.capitalize()), 'w') as f:
+                  f.write(jinja_template.render(entity=entity))
 
 
 if __name__ == "__main__":

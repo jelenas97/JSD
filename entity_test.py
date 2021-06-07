@@ -17,6 +17,7 @@ def get_entity_mm(debug=False):
     # Each model will have this simple types during reference resolving but
     # these will not be a part of `types` list of EntityModel.
     type_builtins = {
+        'long': SimpleType(None, 'long'),
         'integer': SimpleType(None, 'integer'),
         'string': SimpleType(None, 'string')
     }

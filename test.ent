@@ -1,13 +1,17 @@
-entity Person {
-  id: long
-  name : string       // A comment is everything after // to the end of line
-  address: Address    // It is defined by the Comment rule in the grammar
-  age: integer        // integer and string are built-in objects
-}                     // See entity_test.py
+entity Prescription:
+	properties:
+		{Column}
+		id > long
 
-entity Address {
-  id: long
-  street : string
-  city : string
-  country : string
-}
+		{Column}
+		valid > bool
+
+		{ManyToMany}
+		medications > Medication
+
+
+entity Medication:
+	properties:
+		{Column}
+		name > string
+

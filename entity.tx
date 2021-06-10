@@ -3,30 +3,67 @@
 */
 
 EntityModel:
-    types*=SimpleType       // At the beginning of model we can define
-                            // zero or more simple types.
     entities+=Entity        // Each model has one or more entities.
 ;
 
 Entity:
-    'entity' name=ID '{'
-        properties+=Property // Each entity has one or more properties.
-    '}'
+    'entity' name=ID ':'
+        propertiesPart*=PropertyPart // Each entity has zero or one!!! property part
+        operationsPart*=OperationPart // Each entity has zero or one operations part
+
+
+;
+
+PropertyPart:
+    'properties:'
+        properties+=Property
+
 ;
 
 Property:
-    name=ID ':' type=[Type]     // type is a reference to Type instance.
-                                // There are two built-in simple types 
+    annotations*=Annotation
+    name=ID '>' type=Type     // type is a reference to Type instance.
+                                // There are two built-in simple types
                                 // registered on meta-model in entity_test.py
 ;
 
-// Type can be SimpleType or Entity
 Type:
-    SimpleType | Entity
+    type=[RefferenceType] | '[' entity=[RefferenceType] ']'
+;
+
+EntityList:
+    '[' type=[RefferenceType] ']'
+;
+
+Annotation:
+    '{' annotation=[AnnotationName] '}'
+;
+
+AnnotationName:
+    'annotation' name=ID
+;
+// Type can be SimpleType or Entity
+RefferenceType:
+    SimpleType |  Entity
 ;
 
 SimpleType:
     'type' name=ID
+;
+
+// Operation part
+OperationPart:
+    'operations:'
+        operations+=Operation
+
+;
+
+Operation:
+    name=ID '(' parameters*=Parameters  ')' type=[RefferenceType]
+;
+
+Parameters:
+    name=ID ':' type=[RefferenceType] ',' parameters+=Parameters | name=ID ':' type=[RefferenceType]
 ;
 
 // Special rule for comments. Comments start with //

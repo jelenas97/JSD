@@ -7,11 +7,18 @@ entity Prescription:
 		valid > bool
 
 		{ManyToMany}
-		medications > Medication
+		medications > [Medication]
 
+	operations:
+		updateValidity(id : long) bool
+		addMedication(medication : Medication) bool
+		removeMedication(id : long) bool
 
 entity Medication:
 	properties:
+		{Column}
+		id > long
+
 		{Column}
 		name > string
 

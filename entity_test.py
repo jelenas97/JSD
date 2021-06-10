@@ -3,7 +3,7 @@ import os
 from os.path import dirname, join
 from textx import metamodel_from_file
 from textx.export import metamodel_export, model_export
-from metamodel import SimpleType
+from metamodel import SimpleType, AnnotationName
 
 
 this_folder = dirname(__file__)
@@ -19,10 +19,14 @@ def get_entity_mm(debug=False):
     type_builtins = {
         'long': SimpleType(None, 'long'),
         'integer': SimpleType(None, 'integer'),
-        'string': SimpleType(None, 'string')
+        'string': SimpleType(None, 'string'),
+        'date': SimpleType(None, 'date'),
+        'bool': SimpleType(None, 'bool'),
+        'Column': AnnotationName(None, 'Column'),
+        'ManyToMany': AnnotationName(None, 'ManyToMany')
     }
     entity_mm = metamodel_from_file(join(this_folder, 'entity.tx'),
-                                    classes=[SimpleType],
+                                    classes=[SimpleType, AnnotationName],
                                     builtins=type_builtins,
                                     debug=debug)
 
@@ -41,10 +45,10 @@ def main(debug=False):
     metamodel_export(entity_mm, join(dot_folder, 'entity_meta.dot'))
 
     # Build Person model from person.ent file
-    person_model = entity_mm.model_from_file(join(this_folder, 'person.ent'))
+    person_model = entity_mm.model_from_file(join(this_folder, 'test.ent'))
 
     # Export to .dot file for visualization
-    model_export(person_model, join(dot_folder, 'person.dot'))
+    model_export(person_model, join(dot_folder, 'test.dot'))
 
 
 if __name__ == "__main__":

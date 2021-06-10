@@ -9,7 +9,7 @@ EntityModel:
 Entity:
     'entity' name=ID ':'
         propertiesPart*=PropertyPart // Each entity has zero or one!!! property part
-        //operationsPart*=Operation // Each entity has zero or one operations part
+        operationsPart*=OperationPart // Each entity has zero or one operations part
 
 
 ;
@@ -28,11 +28,11 @@ Property:
 ;
 
 Type:
-    type=[RefferenceType] | EntityList
+    type=[RefferenceType] | '[' entity=[RefferenceType] ']'
 ;
 
 EntityList:
-    '['type=[RefferenceType]']'
+    '[' type=[RefferenceType] ']'
 ;
 
 Annotation:
@@ -49,6 +49,21 @@ RefferenceType:
 
 SimpleType:
     'type' name=ID
+;
+
+// Operation part
+OperationPart:
+    'operations:'
+        operations+=Operation
+
+;
+
+Operation:
+    name=ID '(' parameters*=Parameters  ')' type=[RefferenceType]
+;
+
+Parameters:
+    name=ID ':' type=[RefferenceType] ',' parameters+=Parameters | name=ID ':' type=[RefferenceType]
 ;
 
 // Special rule for comments. Comments start with //

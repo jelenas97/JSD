@@ -54,6 +54,12 @@ def main(debug=False):
               with open(join(f"{output_root}/model", "%s.java" % entity.name.capitalize()), 'w') as f:
                   f.write(jinja_template.render(entity=entity))
 
+        elif "repository" in template:
+          for entity in test_model.entities:
+              # For each entity generate file
+              with open(join(f"{output_root}/repository", f"{entity.name.capitalize()}Repo.java"), 'w') as f:
+                  f.write(jinja_template.render(entity=entity))
+
 
 if __name__ == "__main__":
     main()

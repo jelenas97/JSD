@@ -61,12 +61,18 @@ def main(debug=False):
                 with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
                     f.write(jinja_template.render(entity=entity))
 
-        elif "repository" in template:
+        if "repository" in template:
           for entity in test_model.entities:
               # For each entity generate file
               with open(join(f"{output_root}/repository", f"{entity.name.capitalize()}Repo.java"), 'w') as f:
                   f.write(jinja_template.render(entity=entity))
 
+
+        if "dto" in template:
+            for entity in test_model.entities:
+                # For each entity generate file
+                with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
+                    f.write(jinja_template.render(entity=entity))
 
 if __name__ == "__main__":
     main()

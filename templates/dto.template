@@ -1,0 +1,53 @@
+package srcgen.model;
+
+import java.util.*;
+
+
+public class {{entity.name}}DTO {
+  {% for propertyParts in entity.propertiesPart %}
+      {% for property in propertyParts.properties %}
+            {% if property.type.type.propertiesPart %}
+      private {{property.type.type|javatype}}DTO {{property.name}};
+            {% elif property.type.type %}
+      private {{property.type.type|javatype}} {{property.name}};
+            {% else %}
+      private List<{{property.type.entity|javatype}}DTO> {{property.name}};
+            {% endif -%}
+      {% endfor -%}
+
+  {% endfor -%}
+  {% for propertyParts in entity.propertiesPart %}
+    {% for property in propertyParts.properties %}
+       {% if property.type.type.propertiesPart %}
+
+      public {{property.type.type|javatype}}DTO get{{property.name|capitalize}}(){
+        return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}({{property.type.type|javatype}}DTO {{property.name}}){
+        this.{{property.name}} = {{property.name}};
+      }
+       {% elif property.type.type %}
+
+      public {{property.type.type|javatype}} get{{property.name|capitalize}}(){
+        return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}({{property.type.type|javatype}} {{property.name}}){
+        this.{{property.name}} = {{property.name}};
+      }
+        {% else %}
+
+      public List<{{property.type.entity|javatype}}DTO> get{{property.name|capitalize}}(){
+         return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}(List<{{property.type.entity|javatype}}DTO> {{property.name}}){
+         this.{{property.name}} = {{property.name}};
+      }
+        {% endif %}
+    {% endfor %}
+  {% endfor %}
+
+}
+

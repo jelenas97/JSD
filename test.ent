@@ -22,3 +22,10 @@ entity Medication:
 		{Column}
 		name > string
 
+  operations:
+    getById(id : long) Medication
+		getAll() [Medication]
+		save(medication : Medication) bool
+		update(id : long, medication : Medication) bool
+		delete(id : long) bool
+

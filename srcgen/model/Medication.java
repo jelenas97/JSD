@@ -1,3 +1,5 @@
+package srcgen.model;
+
 import javax.persistence.*;
 import java.util.*;
 

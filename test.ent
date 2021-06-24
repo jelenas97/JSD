@@ -22,3 +22,23 @@ entity Medication:
 		{Column}
 		name > string
 
+
+shared[Medication]:
+  	properties:
+		{Id}
+		id > long
+
+		{Column}
+		name > string
+
+	operations:
+		getById
+		getAll
+		save
+		update
+		delete
+
+pages[Medication, Prescription]:
+		add
+		view
+		edit

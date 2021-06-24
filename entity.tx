@@ -4,6 +4,8 @@
 
 EntityModel:
     entities+=Entity        // Each model has one or more entities.
+    shared+=Shared
+    pages+=Pages
 ;
 
 Entity:
@@ -65,6 +67,40 @@ Operation:
 Parameters:
     name=ID ':' type=[RefferenceType] ',' parameters+=Parameters | name=ID ':' type=[RefferenceType]
 ;
+
+//Shared part
+
+Shared:
+    'shared[' entities=Entities  ']:'
+        propertiesPart*=PropertyPart
+        operationsPart*=SharedOperationsPart
+;
+
+SharedOperationsPart:
+    'operations:'
+        operations*=SimpleOperations
+;
+
+SimpleOperations:
+    SAVE = 'save' | UPDATE = 'update' | DELETE = 'delete' | GET_BY_ID = 'getById' | GET_ALL = 'getAll'
+;
+
+Entities:
+    entity=[Entity] ',' entities+=Entities | entity=[Entity]
+;
+
+
+//Pages part
+
+Pages:
+    'pages[' entities=Entities ']:'
+        pagesTypePart*=PagesTypePart
+;
+
+PagesTypePart:
+    VIEW = 'view' | ADD = 'add' | EDIT = 'edit'
+;
+
 
 // Special rule for comments. Comments start with //
 Comment:

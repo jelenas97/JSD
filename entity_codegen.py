@@ -26,13 +26,14 @@ def main(debug=False):
     output_root = "srcgen"
 
     packages = [
-      "model",
-      "repository"
+        "model",
+        "repository",
+        "controller"
     ]
 
     # Create output folder structure
     [makedirs(f"{output_root}/{package}", exist_ok=True)
-              for package in packages]
+     for package in packages]
 
     # Initialize template engine.
     jinja_env = jinja2.Environment(
@@ -49,11 +50,29 @@ def main(debug=False):
         jinja_template = jinja_env.get_template(template.replace("\\", "/"))
 
         if "model" in template:
+            for entity in test_model.entities:
+                # For each entity generate file
+                with open(join(f"{output_root}/model", "%s.java" % entity.name.capitalize()), 'w') as f:
+                    f.write(jinja_template.render(entity=entity))
+
+        if "controller" in template:
+            for entity in test_model.entities:
+                # For each entity generate file
+                with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
+                    f.write(jinja_template.render(entity=entity))
+
+        if "repository" in template:
           for entity in test_model.entities:
               # For each entity generate file
-              with open(join(f"{output_root}/model", "%s.java" % entity.name.capitalize()), 'w') as f:
+              with open(join(f"{output_root}/repository", f"{entity.name.capitalize()}Repo.java"), 'w') as f:
                   f.write(jinja_template.render(entity=entity))
 
+
+        if "dto" in template:
+            for entity in test_model.entities:
+                # For each entity generate file
+                with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
+                    f.write(jinja_template.render(entity=entity))
 
 if __name__ == "__main__":
     main()

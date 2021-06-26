@@ -1,0 +1,98 @@
+package srcgen.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
+import java.util.Collection;
+import java.util.List;
+
+import srcgen.model.{{entity.name}};
+import srcgen.service.{{entity.name}}Service;
+
+@Controller
+@RequestMapping("/{{entity.name|lower}}")
+public class {{entity.name}}Controller{
+
+	@Autowired
+	private {{entity.name}}Service {{entity.name|lower}}Service;
+
+  {% for operationsPart in entity.operationsPart %}
+    {% for operation in operationsPart.operations %}
+      {% if operation.name == "getAll" %}
+  @GetMapping
+  public String getAll(Model model) {
+    initModel(model);
+    return "{{entity.name}}ListView";
+  }
+
+      {% endif %}
+      {% if operation.name == "getById" %}
+  @PostMapping(value = "/{{operation.name}}/{id}")
+  public ResponseEntity<{{entity.name}}> {{operation.name}}(@PathVariable Long id){
+    try {
+        {{entity.name|lower}}Service.{{operation.name}}(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch(Exception e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }    
+  }
+
+      {% endif %}
+      {% if operation.name == "save" %}
+  @GetMapping(value = "/new")
+	public String create(Model model) {
+		initModel(model);
+		return "{{entity.name}}Form";
+  }
+  
+  @PostMapping
+  public ResponseEntity<{{entity.name}}> {{operation.name}}(@RequestBody {{entity.name}} {{entity.name|lower}}){
+    try {
+        {{entity.name|lower}}Service.{{operation.name}}({{entity.name|lower}});
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch(Exception e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }    
+  }
+
+      {% endif %}
+      {% if operation.name == "update" %}
+  @PostMapping(value = "/{{operation.name}}/{id}")
+  public ResponseEntity<?> {{operation.name}}(@PathVariable Long id, @RequestBody {{entity.name}} {{entity.name|lower}}) {
+    try {
+        {{entity.name|lower}}Service.{{operation.name}}({{entity.name|lower}});
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch (Exception e){
+        return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+      {% endif %}
+      {% if operation.name == "delete" %}
+  @DeleteMapping(value="/{{operation.name}}/{id}")
+  public ResponseEntity<{{entity.name}}> {{operation.name}}(@PathVariable Long id) {
+    {{entity.name}} {{entity.name|lower}} = {{entity.name|lower}}Service.getById(id);
+    try {
+      {{entity.name|lower}}Service.{{operation.name}}({{entity.name|lower}});
+      return new ResponseEntity<>({{entity.name|lower}}, HttpStatus.OK);
+    }
+    catch(Exception e) {
+          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+  private void initModel(Model model) {
+    model.addAttribute("{{entity.name}}", new {{entity.name}}());
+    model.addAttribute("{{entity.name}}List", {{entity.name}}Service.getAll());
+  }
+}
+

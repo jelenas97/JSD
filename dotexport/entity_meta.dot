@@ -11,51 +11,73 @@
     edge[dir=black,arrowtail=empty]
 
 
-16647888[ label="{EntityModel|}"]
+13151216[ label="{EntityModel|}"]
 
-14498976[ label="{Entity|name: ID\l}"]
+11003888[ label="{Entity|name: ID\l}"]
 
-16838560[ label="{PropertyPart|}"]
+13350816[ label="{PropertyPart|}"]
 
-16844096[ label="{Property|name: ID\l}"]
+13356352[ label="{Property|name: ID\l}"]
 
-16849632[ label="{Type|}"]
+13361888[ label="{Type|}"]
 
-16855168[ label="{EntityList|}"]
+13367424[ label="{EntityList|}"]
 
-16860704[ label="{Annotation|}"]
+13372960[ label="{Annotation|}"]
 
-16609600[ label="{AnnotationName|name: ID\l}"]
+13112288[ label="{AnnotationName|name: ID\l}"]
 
-16853168[ label="{*RefferenceType|}"]
+13379088[ label="{*RefferenceType|}"]
 
-16608656[ label="{SimpleType|name: ID\l}"]
+13111344[ label="{SimpleType|name: ID\l}"]
 
-16836560[ label="{OperationPart|}"]
+13385216[ label="{OperationPart|}"]
 
-16867600[ label="{Operation|name: ID\l}"]
+13392464[ label="{Operation|name: ID\l}"]
 
-16872544[ label="{Parameters|name: ID\l}"]
+13397408[ label="{Parameters|name: ID\l}"]
+
+13359888[ label="{Shared|}"]
+
+11008832[ label="{SharedOperationsPart|}"]
+
+13342800[ label="{SimpleOperations|SAVE: STRING\lUPDATE: STRING\lDELETE: STRING\lGET_BY_ID: STRING\lGET_ALL: STRING\l}"]
+
+13390464[ label="{Entities|}"]
+
+13378144[ label="{Pages|}"]
+
+11398736[ label="{PagesTypePart|VIEW: STRING\lADD: STRING\lEDIT: STRING\lVIEW_DELETE: STRING\l}"]
 
 
 
-16647888 -> 14498976[arrowtail=diamond, dir=both, headlabel="entities 1..*"]
-14498976 -> 16838560[arrowtail=diamond, dir=both, headlabel="propertiesPart 0..*"]
-14498976 -> 16836560[arrowtail=diamond, dir=both, headlabel="operationsPart 0..*"]
-16838560 -> 16844096[arrowtail=diamond, dir=both, headlabel="properties 1..*"]
-16844096 -> 16860704[arrowtail=diamond, dir=both, headlabel="annotations 0..*"]
-16844096 -> 16849632[arrowtail=diamond, dir=both, headlabel="type "]
-16849632 -> 16853168[headlabel="type "]
-16849632 -> 16853168[headlabel="entity "]
-16855168 -> 16853168[headlabel="type "]
-16860704 -> 16609600[headlabel="annotation "]
-16853168 -> 16608656 [dir=back]
-16853168 -> 14498976 [dir=back]
-16836560 -> 16867600[arrowtail=diamond, dir=both, headlabel="operations 1..*"]
-16867600 -> 16872544[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
-16867600 -> 16849632[arrowtail=diamond, dir=both, headlabel="type "]
-16872544 -> 16853168[headlabel="type "]
-16872544 -> 16872544[arrowtail=diamond, dir=both, headlabel="parameters 1..*"]
+13151216 -> 11003888[arrowtail=diamond, dir=both, headlabel="entities 1..*"]
+13151216 -> 13359888[arrowtail=diamond, dir=both, headlabel="shared 1..*"]
+13151216 -> 13378144[arrowtail=diamond, dir=both, headlabel="pages 1..*"]
+11003888 -> 13350816[arrowtail=diamond, dir=both, headlabel="propertiesPart 0..*"]
+11003888 -> 13385216[arrowtail=diamond, dir=both, headlabel="operationsPart 0..*"]
+13350816 -> 13356352[arrowtail=diamond, dir=both, headlabel="properties 1..*"]
+13356352 -> 13372960[arrowtail=diamond, dir=both, headlabel="annotations 0..*"]
+13356352 -> 13361888[arrowtail=diamond, dir=both, headlabel="type "]
+13361888 -> 13379088[headlabel="type "]
+13361888 -> 13379088[headlabel="entity "]
+13367424 -> 13379088[headlabel="type "]
+13372960 -> 13112288[headlabel="annotation "]
+13379088 -> 13111344 [dir=back]
+13379088 -> 11003888 [dir=back]
+13385216 -> 13392464[arrowtail=diamond, dir=both, headlabel="operations 1..*"]
+13392464 -> 13397408[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
+13392464 -> 13379088[headlabel="type "]
+13397408 -> 13379088[headlabel="type "]
+13397408 -> 13397408[arrowtail=diamond, dir=both, headlabel="parameters 1..*"]
+13359888 -> 13390464[arrowtail=diamond, dir=both, headlabel="entities "]
+13359888 -> 13350816[arrowtail=diamond, dir=both, headlabel="propertiesPart 0..*"]
+13359888 -> 11008832[arrowtail=diamond, dir=both, headlabel="operationsPart 0..*"]
+11008832 -> 13342800[arrowtail=diamond, dir=both, headlabel="operations 0..*"]
+13390464 -> 11003888[headlabel="entity "]
+13390464 -> 13390464[arrowtail=diamond, dir=both, headlabel="entities 1..*"]
+13378144 -> 13390464[arrowtail=diamond, dir=both, headlabel="entities "]
+13378144 -> 11398736[arrowtail=diamond, dir=both, headlabel="pagesTypePart 0..*"]
 match_rules [ shape=plaintext, label=< <table>
 	<tr>
 		<td><b>Comment</b></td><td>\/\/.*$</td>

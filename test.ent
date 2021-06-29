@@ -29,3 +29,23 @@ entity Medication:
 		update(id : long, medication : Medication) bool
 		delete(id : long) bool
 
+
+shared[Medication]:
+  	properties:
+		{Id}
+		id > long
+
+		{Column}
+		name > string
+
+	operations:
+		getById
+		getAll
+		save
+		update
+		delete
+
+pages[Medication, Prescription]:
+		add
+		view
+		edit

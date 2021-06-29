@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import srcgen.model.Medication;
+import srcgen.dto.MedicationDTO;
 import srcgen.service.MedicationService;
 
 @Controller
@@ -20,10 +21,10 @@ public class MedicationController{
 	private MedicationService medicationService;
 
   @PostMapping(value = "/getById/{id}")
-  public ResponseEntity<Medication> getById(@PathVariable Long id){
+  public ResponseEntity<MedicationDTO> getById(@PathVariable Long id){
     try {
-        medicationService.getById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        MedicationDTO medication = medicationService.getById(id);
+        return new ResponseEntity<>(medication);
     }
     catch(Exception e){
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -43,7 +44,7 @@ public class MedicationController{
   }
   
   @PostMapping
-  public ResponseEntity<Medication> save(@RequestBody Medication medication){
+  public ResponseEntity<Medication> save(@RequestBody MedicationDTO medication){
     try {
         medicationService.save(medication);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -54,7 +55,7 @@ public class MedicationController{
   }
 
   @PostMapping(value = "/update/{id}")
-  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Medication medication) {
+  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody MedicationDTO medication) {
     try {
         medicationService.update(medication);
         return new ResponseEntity<>(HttpStatus.OK);

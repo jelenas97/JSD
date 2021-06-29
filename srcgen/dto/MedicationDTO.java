@@ -1,9 +1,9 @@
-package srcgen.model;
+package srcgen.dto;
 
 import java.util.*;
+import srcgen.model.*;
 
-
-public class MedicationDTO {
+public class MedicationDTO extends Medication {
       private long id;
       private String name;
 

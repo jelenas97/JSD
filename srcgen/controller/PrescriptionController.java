@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import srcgen.model.Prescription;
+import srcgen.dto.PrescriptionDTO;
 import srcgen.service.PrescriptionService;
 
 @Controller

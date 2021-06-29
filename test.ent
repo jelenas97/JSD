@@ -1,6 +1,6 @@
 entity Prescription:
 	properties:
-		{Column}
+		{Id}
 		id > long
 
 		{Column}
@@ -16,7 +16,7 @@ entity Prescription:
 
 entity Medication:
 	properties:
-		{Column}
+		{Id}
 		id > long
 
 		{Column}
@@ -30,7 +30,7 @@ entity Medication:
 		delete(id : long) bool
 
 
-shared[Medication]:
+shared[Medication, Prescription]:
   	properties:
 		{Id}
 		id > long

@@ -1,0 +1,55 @@
+package srcgen.service.impl;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.Collection;
+
+import srcgen.service.{{entity.name}}Service;
+import srcgen.model.{{entity.name}};
+import srcgen.repository.{{entity.name}}Repository;
+
+
+@Service
+public class {{entity.name}}ServiceImpl implements {{entity.name}}Service {
+
+	@Autowired
+	private {{entity.name}}Repository {{entity.name|lower}}Repository;
+
+  {% for operationsPart in entity.operationsPart %}
+    {% for operation in operationsPart.operations %}
+      {% if operation.name == "getAll" %}
+  @Override
+  public Collection<{{entity.name|capitalize}}> {{operation.name}}() {
+      return {{entity.name|lower}}Repository.findAll();
+  }
+
+      {% elif operation.name == "getById" %}
+  @Override
+  public {{entity.name|capitalize}} {{operation.name}}(long id) {
+      return {{entity.name|lower}}Repository.getOne(id);
+  }
+
+      {% elif operation.name == "save" or operation.name == "update" %}
+  @Override
+  public {{entity.name|capitalize}} {{operation.name}}({{entity.name|capitalize}} {{entity.name|lower}}) {
+      return {{entity.name|lower}}Repository.{{operation.name}}({{entity.name|lower}});
+  }
+
+      {% elif operation.name == "delete" %}
+  @Override
+  public {{entity.name|capitalize}} {{operation.name}}({{entity.name|capitalize}} {{entity.name|lower}}) {
+      {{entity.name|lower}}Repository.{{operation.name}}({{entity.name|lower}});
+  }
+
+      {% else %}
+  @Override
+  public void {{operation.name}}() {
+      return;
+  }
+
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+}
+

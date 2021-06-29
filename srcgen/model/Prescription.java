@@ -11,7 +11,7 @@ public class Prescription {
       private long id;
 
       @Column
-      private bool valid;
+      private boolean valid;
 
       @ManyToMany
       private List<Medication> medications;
@@ -24,11 +24,11 @@ public class Prescription {
         this.id = id;
       }
 
-      public bool getValid(){
+      public boolean getValid(){
         return this.valid;
       }
 
-      public void setValid(bool valid){
+      public void setValid(boolean valid){
         this.valid = valid;
       }
       public List<Medication> getMedications(){

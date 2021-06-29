@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import srcgen.model.{{entity.name}};
+import srcgen.dto.{{entity.name}}DTO;
 import srcgen.service.{{entity.name}}Service;
 
 @Controller
@@ -31,10 +32,10 @@ public class {{entity.name}}Controller{
       {% endif %}
       {% if operation.name == "getById" %}
   @PostMapping(value = "/{{operation.name}}/{id}")
-  public ResponseEntity<{{entity.name}}> {{operation.name}}(@PathVariable Long id){
+  public ResponseEntity<{{entity.name}}DTO> {{operation.name}}(@PathVariable Long id){
     try {
-        {{entity.name|lower}}Service.{{operation.name}}(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        {{entity.name|capitalize}}DTO {{entity.name|lower}} = {{entity.name|lower}}Service.{{operation.name}}(id);
+        return new ResponseEntity<>({{entity.name|lower}});
     }
     catch(Exception e){
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -50,7 +51,7 @@ public class {{entity.name}}Controller{
   }
   
   @PostMapping
-  public ResponseEntity<{{entity.name}}> {{operation.name}}(@RequestBody {{entity.name}} {{entity.name|lower}}){
+  public ResponseEntity<{{entity.name}}> {{operation.name}}(@RequestBody {{entity.name}}DTO {{entity.name|lower}}){
     try {
         {{entity.name|lower}}Service.{{operation.name}}({{entity.name|lower}});
         return new ResponseEntity<>(HttpStatus.OK);
@@ -63,7 +64,7 @@ public class {{entity.name}}Controller{
       {% endif %}
       {% if operation.name == "update" %}
   @PostMapping(value = "/{{operation.name}}/{id}")
-  public ResponseEntity<?> {{operation.name}}(@PathVariable Long id, @RequestBody {{entity.name}} {{entity.name|lower}}) {
+  public ResponseEntity<?> {{operation.name}}(@PathVariable Long id, @RequestBody {{entity.name}}DTO {{entity.name|lower}}) {
     try {
         {{entity.name|lower}}Service.{{operation.name}}({{entity.name|lower}});
         return new ResponseEntity<>(HttpStatus.OK);

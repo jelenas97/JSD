@@ -25,27 +25,21 @@ entity Medication:
   operations:
     getById(id : long) Medication
 		getAll() [Medication]
-		save(medication : Medication) bool
-		update(id : long, medication : Medication) bool
-		delete(id : long) bool
-
 
 shared[Medication, Prescription]:
-  	properties:
+  properties:
 		{Id}
 		id > long
 
 		{Column}
 		name > string
 
-	operations:
-		getById
-		getAll
-		save
-		update
-		delete
+  operations:
+    save
+    update
+    delete
 
 pages[Medication, Prescription]:
-		add
-		view
-		edit
+  add
+  view
+  edit

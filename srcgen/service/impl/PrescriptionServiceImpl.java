@@ -17,6 +17,21 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 	private PrescriptionRepository prescriptionRepository;
 
   @Override
+  public Prescription save(Prescription prescription) {
+      return prescriptionRepository.save(prescription);
+  }
+
+  @Override
+  public Prescription update(Prescription prescription) {
+      return prescriptionRepository.update(prescription);
+  }
+
+  @Override
+  public Prescription delete(Prescription prescription) {
+      prescriptionRepository.delete(prescription);
+  }
+
+  @Override
   public void updateValidity() {
       return;
   }

@@ -37,46 +37,6 @@ public class MedicationController{
     return "MedicationListView";
   }
 
-  @GetMapping(value = "/new")
-	public String create(Model model) {
-		initModel(model);
-		return "MedicationForm";
-  }
-  
-  @PostMapping
-  public ResponseEntity<Medication> save(@RequestBody MedicationDTO medication){
-    try {
-        medicationService.save(medication);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    catch(Exception e){
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }    
-  }
-
-  @PostMapping(value = "/update/{id}")
-  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody MedicationDTO medication) {
-    try {
-        medicationService.update(medication);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    catch (Exception e){
-        return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  @DeleteMapping(value="/delete/{id}")
-  public ResponseEntity<Medication> delete(@PathVariable Long id) {
-    Medication medication = medicationService.getById(id);
-    try {
-      medicationService.delete(medication);
-      return new ResponseEntity<>(medication, HttpStatus.OK);
-    }
-    catch(Exception e) {
-          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
   private void initModel(Model model) {
     model.addAttribute("Medication", new Medication());
     model.addAttribute("MedicationList", MedicationService.getAll());

@@ -17,16 +17,6 @@ public class MedicationServiceImpl implements MedicationService {
 	private MedicationRepository medicationRepository;
 
   @Override
-  public Medication getById(long id) {
-      return medicationRepository.getOne(id);
-  }
-
-  @Override
-  public Collection<Medication> getAll() {
-      return medicationRepository.findAll();
-  }
-
-  @Override
   public Medication save(Medication medication) {
       return medicationRepository.save(medication);
   }
@@ -39,6 +29,16 @@ public class MedicationServiceImpl implements MedicationService {
   @Override
   public Medication delete(Medication medication) {
       medicationRepository.delete(medication);
+  }
+
+  @Override
+  public Medication getById(long id) {
+      return medicationRepository.getOne(id);
+  }
+
+  @Override
+  public Collection<Medication> getAll() {
+      return medicationRepository.findAll();
   }
 
 }

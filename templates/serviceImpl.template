@@ -16,9 +16,44 @@ public class {{entity.name}}ServiceImpl implements {{entity.name}}Service {
 	@Autowired
 	private {{entity.name}}Repository {{entity.name|lower}}Repository;
 
-  {% for operationsPart in entity.operationsPart %}
+  {% for operationsPart in shared.operationsPart %}
     {% for operation in operationsPart.operations %}
-      {% if operation.name == "getAll" %}
+      {% if operation.GET_ALL %}
+  @Override
+  public Collection<{{entity.name|capitalize}}> getAll() {
+      return {{entity.name|lower}}Repository.findAll();
+  }
+
+      {% elif operation.GET_BY_ID %}
+  @Override
+  public {{entity.name|capitalize}} getById(long id) {
+      return {{entity.name|lower}}Repository.getOne(id);
+  }
+
+      {% elif operation.SAVE  %}
+  @Override
+  public {{entity.name|capitalize}} save({{entity.name|capitalize}} {{entity.name|lower}}) {
+      return {{entity.name|lower}}Repository.save({{entity.name|lower}});
+  }
+
+      {% elif operation.UPDATE %}
+  @Override
+  public {{entity.name|capitalize}} update({{entity.name|capitalize}} {{entity.name|lower}}) {
+      return {{entity.name|lower}}Repository.update({{entity.name|lower}});
+  }
+
+      {% elif operation.DELETE %}
+  @Override
+  public {{entity.name|capitalize}} delete({{entity.name|capitalize}} {{entity.name|lower}}) {
+      {{entity.name|lower}}Repository.delete({{entity.name|lower}});
+  }
+
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+    {% for operationsPart in entity.operationsPart %}
+      {% for operation in operationsPart.operations %}
+        {% if operation.name == "getAll" %}
   @Override
   public Collection<{{entity.name|capitalize}}> {{operation.name}}() {
       return {{entity.name|lower}}Repository.findAll();
@@ -48,8 +83,8 @@ public class {{entity.name}}ServiceImpl implements {{entity.name}}Service {
       return;
   }
 
-      {% endif %}
+        {% endif %}
+      {% endfor %}
     {% endfor %}
-  {% endfor %}
 }
 

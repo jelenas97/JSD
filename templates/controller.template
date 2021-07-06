@@ -20,6 +20,77 @@ public class {{entity.name}}Controller{
 	@Autowired
 	private {{entity.name}}Service {{entity.name|lower}}Service;
 
+{% for operationsPart in shared.operationsPart %}
+    {% for operation in operationsPart.operations %}
+      {% if operation.GET_ALL %}
+  @GetMapping
+  public String getAll(Model model) {
+    initModel(model);
+    return "{{entity.name}}ListView";
+  }
+
+      {% endif %}
+      {% if operation.GET_BY_ID %}
+  @GetMapping(value = "/{id}")
+  public ResponseEntity<{{entity.name}}DTO> getById(@PathVariable Long id){
+    try {
+        {{entity.name|capitalize}}DTO {{entity.name|lower}} = {{entity.name|lower}}Service.getById(id);
+        return new ResponseEntity<>({{entity.name|lower}});
+    }
+    catch(Exception e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }    
+  }
+
+      {% endif %}
+      {% if operation.SAVE %}
+  @GetMapping(value = "/new")
+	public String create(Model model) {
+		initModel(model);
+		return "{{entity.name}}Form";
+  }
+  
+  @PostMapping
+  public ResponseEntity<{{entity.name}}> save(@RequestBody {{entity.name}}DTO {{entity.name|lower}}){
+    try {
+        {{entity.name|lower}}Service.save({{entity.name|lower}});
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch(Exception e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }    
+  }
+
+      {% endif %}
+      {% if operation.UPDATE %}
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody {{entity.name}}DTO {{entity.name|lower}}) {
+    try {
+        {{entity.name|lower}}Service.update({{entity.name|lower}});
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch (Exception e){
+        return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+      {% endif %}
+      {% if operation.DELETE %}
+  @DeleteMapping(value="/{id}")
+  public ResponseEntity<{{entity.name}}> delete(@PathVariable Long id) {
+    {{entity.name}} {{entity.name|lower}} = {{entity.name|lower}}Service.getById(id);
+    try {
+      {{entity.name|lower}}Service.delete({{entity.name|lower}});
+      return new ResponseEntity<>({{entity.name|lower}}, HttpStatus.OK);
+    }
+    catch(Exception e) {
+          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
   {% for operationsPart in entity.operationsPart %}
     {% for operation in operationsPart.operations %}
       {% if operation.name == "getAll" %}
@@ -31,7 +102,7 @@ public class {{entity.name}}Controller{
 
       {% endif %}
       {% if operation.name == "getById" %}
-  @PostMapping(value = "/{{operation.name}}/{id}")
+  @GetMapping(value = "/{id}")
   public ResponseEntity<{{entity.name}}DTO> {{operation.name}}(@PathVariable Long id){
     try {
         {{entity.name|capitalize}}DTO {{entity.name|lower}} = {{entity.name|lower}}Service.{{operation.name}}(id);
@@ -63,7 +134,7 @@ public class {{entity.name}}Controller{
 
       {% endif %}
       {% if operation.name == "update" %}
-  @PostMapping(value = "/{{operation.name}}/{id}")
+  @PutMapping(value = "/{id}")
   public ResponseEntity<?> {{operation.name}}(@PathVariable Long id, @RequestBody {{entity.name}}DTO {{entity.name|lower}}) {
     try {
         {{entity.name|lower}}Service.{{operation.name}}({{entity.name|lower}});
@@ -76,7 +147,7 @@ public class {{entity.name}}Controller{
 
       {% endif %}
       {% if operation.name == "delete" %}
-  @DeleteMapping(value="/{{operation.name}}/{id}")
+  @DeleteMapping(value="/{id}")
   public ResponseEntity<{{entity.name}}> {{operation.name}}(@PathVariable Long id) {
     {{entity.name}} {{entity.name|lower}} = {{entity.name|lower}}Service.getById(id);
     try {

@@ -60,9 +60,14 @@ def main(debug=False):
 
         if "controller" in template:
             for entity in test_model.entities:
-                # For each entity generate file
-                with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
-                    f.write(jinja_template.render(entity=entity))
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
+                
+                if shared:
+                    with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                else:
+                    with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity))
 
         if "repository" in template:
             for entity in test_model.entities:

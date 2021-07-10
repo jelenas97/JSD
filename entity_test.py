@@ -21,7 +21,7 @@ def get_entity_mm(debug=False):
         'integer': SimpleType(None, 'integer'),
         'string': SimpleType(None, 'string'),
         'date': SimpleType(None, 'date'),
-        'bool': SimpleType(None, 'bool'),
+        'bool': SimpleType(None, 'boolean'),
         'Column': AnnotationName(None, 'Column'),
         'ManyToMany': AnnotationName(None, 'ManyToMany'),
         'Id': AnnotationName(None, 'Id')

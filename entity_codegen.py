@@ -20,7 +20,8 @@ def main(debug=False):
         return {
             'long': 'long',
             'integer': 'int',
-            'string': 'String'
+            'string': 'String',
+            'bool': 'boolean'
         }.get(s.name, s.name)
 
     output_root = "srcgen"
@@ -28,7 +29,9 @@ def main(debug=False):
     packages = [
         "model",
         "repository",
-        "controller"
+        "controller",
+        "service",
+        "service/impl"
     ]
 
     # Create output folder structure
@@ -57,22 +60,38 @@ def main(debug=False):
 
         if "controller" in template:
             for entity in test_model.entities:
-                # For each entity generate file
-                with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
-                    f.write(jinja_template.render(entity=entity))
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
+                
+                if shared:
+                    with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                else:
+                    with open(join(f"{output_root}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity))
 
         if "repository" in template:
-          for entity in test_model.entities:
-              # For each entity generate file
-              with open(join(f"{output_root}/repository", f"{entity.name.capitalize()}Repo.java"), 'w') as f:
-                  f.write(jinja_template.render(entity=entity))
-
+            for entity in test_model.entities:
+                # For each entity generate file
+                with open(join(f"{output_root}/repository", f"{entity.name.capitalize()}Repository.java"), 'w') as f:
+                    f.write(jinja_template.render(entity=entity))
 
         if "dto" in template:
             for entity in test_model.entities:
                 # For each entity generate file
                 with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
                     f.write(jinja_template.render(entity=entity))
+
+        if "serviceImpl" in template:
+            for entity in test_model.entities:
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
+
+                if shared:
+                    with open(join(f"{output_root}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                else:
+                    with open(join(f"{output_root}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity))
+
 
 if __name__ == "__main__":
     main()

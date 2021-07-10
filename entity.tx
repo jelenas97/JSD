@@ -1,7 +1,7 @@
 EntityModel:
-    entities+=Entity        // Each model has one or more entities.
-    shared+=Shared
-    pages+=Pages
+    entities += Entity        // Each model has one or more entities.
+    shared = Shared?
+    pages = Pages?
 ;
 
 Entity:
@@ -17,17 +17,11 @@ PropertyPart:
 
 Property:
     annotations *= Annotation
-    name = ID '>' type = Type       // type is a reference to Type instance.
-;                                   // There are two built-in simple types
-                                    // registered on meta-model in entity_test.py
-
+    name = ID '>' type = Type
+;
 
 Type:
     type = [RefferenceType] | '[' entity=[RefferenceType] ']'
-;
-
-EntityList:
-    '[' type = [RefferenceType] ']'
 ;
 
 Annotation:
@@ -58,40 +52,35 @@ Operation:
 ;
 
 Parameters:
-    name=ID ':' type=[RefferenceType] ',' parameters+=Parameters | name=ID ':' type=[RefferenceType]
+    name = ID ':' type=[RefferenceType] ',' parameters += Parameters | name=ID ':' type=[RefferenceType]
 ;
 
 //Shared part
 
 Shared:
-    'shared[' entities=Entities  ']:'
-        propertiesPart*=PropertyPart
-        operationsPart*=SharedOperationsPart
+    'shared[' entities += [Entity][','] ']:'
+        propertiesPart *= PropertyPart
+        operationsPart *= SharedOperationsPart
 ;
 
 SharedOperationsPart:
     'operations:'
-        operations*=SimpleOperations
+        operations += SimpleOperation
 ;
 
-SimpleOperations:
-    SAVE = 'save' | UPDATE = 'update' | DELETE = 'delete' | GET_BY_ID = 'getById' | GET_ALL = 'getAll'
+SimpleOperation:
+    UPDATE ?= 'update' | SAVE ?= 'save' | DELETE ?= 'delete' | GET_BY_ID ?= 'getById' | GET_ALL ?= 'getAll'
 ;
-
-Entities:
-    entity=[Entity] ',' entities+=Entities | entity=[Entity]
-;
-
 
 //Pages part
 
 Pages:
-    'pages[' entities=Entities ']:'
-        pagesTypePart*=PagesTypePart
+    'pages[' entities *= [Entity][','] ']:'
+        pagesTypePart *= PagesTypePart
 ;
 
 PagesTypePart:
-    VIEW = 'view' | ADD = 'add' | EDIT = 'edit'
+    VIEW ?= 'view' | ADD ?= 'add' | EDIT ?= 'edit'
 ;
 
 

@@ -28,7 +28,8 @@ def main(debug=False):
     packages = [
         "model",
         "repository",
-        "controller"
+        "controller",
+        "service"
     ]
 
     # Create output folder structure
@@ -72,6 +73,11 @@ def main(debug=False):
             for entity in test_model.entities:
                 # For each entity generate file
                 with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
+                    f.write(jinja_template.render(entity=entity))
+
+        if "service" in template:
+            for entity in test_model.entities:
+                with open(join(f"{output_root}/service", f"{entity.name.capitalize()}Service.java"), 'w') as f:
                     f.write(jinja_template.render(entity=entity))
 
 if __name__ == "__main__":

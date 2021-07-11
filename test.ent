@@ -1,6 +1,6 @@
 entity Prescription:
 	properties:
-		{Column}
+		{Id}
 		id > long
 
 		{Column}
@@ -16,7 +16,7 @@ entity Prescription:
 
 entity Medication:
 	properties:
-		{Column}
+		{Id}
 		id > long
 
 		{Column}
@@ -25,7 +25,21 @@ entity Medication:
   operations:
     getById(id : long) Medication
 		getAll() [Medication]
-		save(medication : Medication) bool
-		update(id : long, medication : Medication) bool
-		delete(id : long) bool
 
+shared[Medication, Prescription]:
+  properties:
+		{Id}
+		id > long
+
+		{Column}
+		name > string
+
+  operations:
+    save
+    update
+    delete
+
+pages[Medication, Prescription]:
+  add
+  view
+  edit

@@ -1,17 +1,17 @@
-package srcgen.model;
+package srcgen.dto;
 
 import java.util.*;
+import srcgen.model.*;
 
-
-public class {{entity.name}}DTO {
+public class {{entity.name}}DTO extends {{entity.name}} {
   {% for propertyParts in entity.propertiesPart %}
       {% for property in propertyParts.properties %}
             {% if property.type.type.propertiesPart %}
-      private {{property.type.type|javatype}}DTO {{property.name}};
+      private {{property.type.type|javatype}} {{property.name}};
             {% elif property.type.type %}
       private {{property.type.type|javatype}} {{property.name}};
             {% else %}
-      private List<{{property.type.entity|javatype}}DTO> {{property.name}};
+      private List<{{property.type.entity|javatype}}> {{property.name}};
             {% endif -%}
       {% endfor -%}
 
@@ -20,11 +20,11 @@ public class {{entity.name}}DTO {
     {% for property in propertyParts.properties %}
        {% if property.type.type.propertiesPart %}
 
-      public {{property.type.type|javatype}}DTO get{{property.name|capitalize}}(){
+      public {{property.type.type|javatype}} get{{property.name|capitalize}}(){
         return this.{{property.name}};
       }
 
-      public void set{{property.name|capitalize}}({{property.type.type|javatype}}DTO {{property.name}}){
+      public void set{{property.name|capitalize}}({{property.type.type|javatype}} {{property.name}}){
         this.{{property.name}} = {{property.name}};
       }
        {% elif property.type.type %}
@@ -38,11 +38,11 @@ public class {{entity.name}}DTO {
       }
         {% else %}
 
-      public List<{{property.type.entity|javatype}}DTO> get{{property.name|capitalize}}(){
+      public List<{{property.type.entity|javatype}}> get{{property.name|capitalize}}(){
          return this.{{property.name}};
       }
 
-      public void set{{property.name|capitalize}}(List<{{property.type.entity|javatype}}DTO> {{property.name}}){
+      public void set{{property.name|capitalize}}(List<{{property.type.entity|javatype}}> {{property.name}}){
          this.{{property.name}} = {{property.name}};
       }
         {% endif %}

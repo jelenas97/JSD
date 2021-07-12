@@ -81,6 +81,19 @@ def main(debug=False):
                 with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
                     f.write(jinja_template.render(entity=entity))
 
+        if "serviceImpl" in template:
+            for entity in test_model.entities:
+                shared = [
+                    x for x in test_model.shared.entities if x.name == entity.name]
+
+                if shared:
+                    with open(join(f"{output_root}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
+                        f.write(jinja_template.render(
+                            entity=entity, shared=test_model.shared))
+                else:
+                    with open(join(f"{output_root}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity))
+
         if "service" in template:
             for entity in test_model.entities:
                 with open(join(f"{output_root}/service", f"{entity.name.capitalize()}Service.java"), 'w') as f:

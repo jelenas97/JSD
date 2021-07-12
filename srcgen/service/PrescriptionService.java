@@ -1,17 +1,34 @@
-package srcgen.service;
+package srcgen.service.impl;
 
-import java.util.*;
-import srcgen.model.Prescription;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Collection;
+
+import srcgen.service.PrescriptionService;
+import srcgen.model.Prescription;
+import srcgen.repository.PrescriptionRepository;
+
 
 @Service
-public interface PrescriptionService {
+public class PrescriptionServiceImpl implements PrescriptionService {
 
-    bool updateValidity(Long id);
+	@Autowired
+	private PrescriptionRepository prescriptionRepository;
 
-    bool addMedication(Medication medication);
+  @Override
+  public void updateValidity() {
+      return;
+  }
 
-    bool removeMedication(Long id);
+  @Override
+  public void addMedication() {
+      return;
+  }
 
+  @Override
+  public void removeMedication() {
+      return;
+  }
 
 }

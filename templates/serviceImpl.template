@@ -16,6 +16,7 @@ public class {{entity.name}}ServiceImpl implements {{entity.name}}Service {
 	@Autowired
 	private {{entity.name}}Repository {{entity.name|lower}}Repository;
 
+{% if shared %}
   {% for operationsPart in shared.operationsPart %}
     {% for operation in operationsPart.operations %}
       {% if operation.GET_ALL %}
@@ -51,6 +52,7 @@ public class {{entity.name}}ServiceImpl implements {{entity.name}}Service {
       {% endif %}
     {% endfor %}
   {% endfor %}
+{% endif %}
     {% for operationsPart in entity.operationsPart %}
       {% for operation in operationsPart.operations %}
         {% if operation.name == "getAll" %}

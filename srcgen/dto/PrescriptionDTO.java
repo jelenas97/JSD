@@ -1,12 +1,12 @@
-package srcgen.model;
+package srcgen.dto;
 
 import java.util.*;
+import srcgen.model.*;
 
-
-public class PrescriptionDTO {
+public class PrescriptionDTO extends Prescription {
       private long id;
-      private bool valid;
-      private List<MedicationDTO> medications;
+      private boolean valid;
+      private List<Medication> medications;
 
       public long getId(){
         return this.id;
@@ -16,19 +16,19 @@ public class PrescriptionDTO {
         this.id = id;
       }
 
-      public bool getValid(){
+      public boolean getValid(){
         return this.valid;
       }
 
-      public void setValid(bool valid){
+      public void setValid(boolean valid){
         this.valid = valid;
       }
 
-      public List<MedicationDTO> getMedications(){
+      public List<Medication> getMedications(){
          return this.medications;
       }
 
-      public void setMedications(List<MedicationDTO> medications){
+      public void setMedications(List<Medication> medications){
          this.medications = medications;
       }
 

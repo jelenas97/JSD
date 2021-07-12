@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 import srcgen.model.Medication;
+import srcgen.dto.MedicationDTO;
 import srcgen.service.MedicationService;
 
 @Controller
@@ -19,11 +20,51 @@ public class MedicationController{
 	@Autowired
 	private MedicationService medicationService;
 
-  @PostMapping(value = "/getById/{id}")
-  public ResponseEntity<Medication> getById(@PathVariable Long id){
+  @GetMapping(value = "/new")
+	public String create(Model model) {
+		initModel(model);
+		return "MedicationForm";
+  }
+  
+  @PostMapping
+  public ResponseEntity<Medication> save(@RequestBody MedicationDTO medication){
     try {
-        medicationService.getById(id);
+        medicationService.save(medication);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch(Exception e){
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }    
+  }
+
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody MedicationDTO medication) {
+    try {
+        medicationService.update(medication);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch (Exception e){
+        return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @DeleteMapping(value="/{id}")
+  public ResponseEntity<Medication> delete(@PathVariable Long id) {
+    Medication medication = medicationService.getById(id);
+    try {
+      medicationService.delete(medication);
+      return new ResponseEntity<>(medication, HttpStatus.OK);
+    }
+    catch(Exception e) {
+          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
+
+  @GetMapping(value = "/{id}")
+  public ResponseEntity<MedicationDTO> getById(@PathVariable Long id){
+    try {
+        MedicationDTO medication = medicationService.getById(id);
+        return new ResponseEntity<>(medication);
     }
     catch(Exception e){
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -34,46 +75,6 @@ public class MedicationController{
   public String getAll(Model model) {
     initModel(model);
     return "MedicationListView";
-  }
-
-  @GetMapping(value = "/new")
-	public String create(Model model) {
-		initModel(model);
-		return "MedicationForm";
-  }
-  
-  @PostMapping
-  public ResponseEntity<Medication> save(@RequestBody Medication medication){
-    try {
-        medicationService.save(medication);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    catch(Exception e){
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }    
-  }
-
-  @PostMapping(value = "/update/{id}")
-  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Medication medication) {
-    try {
-        medicationService.update(medication);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-    catch (Exception e){
-        return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
-    }
-  }
-
-  @DeleteMapping(value="/delete/{id}")
-  public ResponseEntity<Medication> delete(@PathVariable Long id) {
-    Medication medication = medicationService.getById(id);
-    try {
-      medicationService.delete(medication);
-      return new ResponseEntity<>(medication, HttpStatus.OK);
-    }
-    catch(Exception e) {
-          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
   }
 
   private void initModel(Model model) {

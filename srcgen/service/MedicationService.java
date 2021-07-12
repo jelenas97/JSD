@@ -1,21 +1,29 @@
-package srcgen.service;
+package srcgen.service.impl;
 
-import java.util.*;
-import srcgen.model.Medication;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Collection;
+
+import srcgen.service.MedicationService;
+import srcgen.model.Medication;
+import srcgen.repository.MedicationRepository;
+
 
 @Service
-public interface MedicationService {
+public class MedicationServiceImpl implements MedicationService {
 
-    Medication getById(Long id);
+	@Autowired
+	private MedicationRepository medicationRepository;
 
-    List<Medication> getAll();
+  @Override
+  public Medication getById(long id) {
+      return medicationRepository.getOne(id);
+  }
 
-    bool save(Medication medication);
-
-    bool update(Long id);
-
-    bool delete(Long id);
-
+  @Override
+  public Collection<Medication> getAll() {
+      return medicationRepository.findAll();
+  }
 
 }

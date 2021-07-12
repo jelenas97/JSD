@@ -1,0 +1,21 @@
+package srcgen.service;
+
+import java.util.*;
+import srcgen.model.{{entity.name}};
+import org.springframework.stereotype.Service;
+
+@Service
+public interface {{entity.name}}Service {
+
+{% for operationsPart in entity.operationsPart %}
+    {% for operation in operationsPart.operations %}
+    {% if operation.name == "getAll" %}
+    List<{{entity.name}}> {{operation.name}}({% for param in operation.parameters %}{{param.type.name}} {{param.name}}{% endfor %});
+    {% else %}
+    {{operation.type.type.name}} {{operation.name}}({% for param in operation.parameters %}{{param.type.name|capitalize}} {{param.name}}{% endfor %});
+    {% endif %}
+
+    {% endfor %}
+{% endfor %}
+
+}

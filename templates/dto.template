@@ -4,21 +4,34 @@ import java.util.*;
 import srcgen.model.*;
 
 public class {{entity.name}}DTO extends {{entity.name}} {
-  {% for propertyParts in entity.propertiesPart %}
-      {% for property in propertyParts.properties %}
-            {% if property.type.type.propertiesPart %}
+{% if shared %}
+  {% for propertyParts in shared.propertiesPart %}
+    {% for property in propertyParts.properties %}
+      {% if property.type.type.propertiesPart %}
       private {{property.type.type|javatype}} {{property.name}};
-            {% elif property.type.type %}
+      {% elif property.type.type %}
       private {{property.type.type|javatype}} {{property.name}};
-            {% else %}
+      {% else %}
       private List<{{property.type.entity|javatype}}> {{property.name}};
-            {% endif -%}
-      {% endfor -%}
-
-  {% endfor -%}
+      {% endif -%}
+    {% endfor %}
+  {% endfor %}
+{% endif %}
   {% for propertyParts in entity.propertiesPart %}
     {% for property in propertyParts.properties %}
-       {% if property.type.type.propertiesPart %}
+      {% if property.type.type.propertiesPart %}
+      private {{property.type.type|javatype}} {{property.name}};
+      {% elif property.type.type %}
+      private {{property.type.type|javatype}} {{property.name}};
+      {% else %}
+      private List<{{property.type.entity|javatype}}> {{property.name}};
+      {% endif -%}
+    {% endfor -%}
+  {% endfor -%}
+{% if shared %}
+  {% for propertyParts in shared.propertiesPart %}
+    {% for property in propertyParts.properties %}
+      {% if property.type.type.propertiesPart %}
 
       public {{property.type.type|javatype}} get{{property.name|capitalize}}(){
         return this.{{property.name}};
@@ -45,7 +58,40 @@ public class {{entity.name}}DTO extends {{entity.name}} {
       public void set{{property.name|capitalize}}(List<{{property.type.entity|javatype}}> {{property.name}}){
          this.{{property.name}} = {{property.name}};
       }
-        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endif %}
+  {% for propertyParts in entity.propertiesPart %}
+    {% for property in propertyParts.properties %}
+      {% if property.type.type.propertiesPart %}
+
+      public {{property.type.type|javatype}} get{{property.name|capitalize}}(){
+        return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}({{property.type.type|javatype}} {{property.name}}){
+        this.{{property.name}} = {{property.name}};
+      }
+       {% elif property.type.type %}
+
+      public {{property.type.type|javatype}} get{{property.name|capitalize}}(){
+        return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}({{property.type.type|javatype}} {{property.name}}){
+        this.{{property.name}} = {{property.name}};
+      }
+        {% else %}
+
+      public List<{{property.type.entity|javatype}}> get{{property.name|capitalize}}(){
+         return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}(List<{{property.type.entity|javatype}}> {{property.name}}){
+         this.{{property.name}} = {{property.name}};
+      }
+      {% endif %}
     {% endfor %}
   {% endfor %}
 

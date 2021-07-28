@@ -13,6 +13,9 @@ public class Medication {
       @Column
       private String name;
 
+      @Column
+      private String code;
+
       public long getId(){
         return this.id;
       }
@@ -27,6 +30,14 @@ public class Medication {
 
       public void setName(String name){
         this.name = name;
+      }
+
+      public String getCode(){
+        return this.code;
+      }
+
+      public void setCode(String code){
+        this.code = code;
       }
 
 }

@@ -19,3 +19,4 @@ public interface {{entity.name}}Service {
 {% endfor %}
 
 }
+

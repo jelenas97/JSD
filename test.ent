@@ -1,8 +1,5 @@
 entity Prescription:
 	properties:
-		{Id}
-		id > long
-
 		{Column}
 		valid > bool
 
@@ -16,11 +13,8 @@ entity Prescription:
 
 entity Medication:
 	properties:
-		{Id}
-		id > long
-
 		{Column}
-		name > string
+		code > string
 
   operations:
     getById(id : long) Medication

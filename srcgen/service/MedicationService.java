@@ -17,6 +17,21 @@ public class MedicationServiceImpl implements MedicationService {
 	private MedicationRepository medicationRepository;
 
   @Override
+  public Medication save(Medication medication) {
+      return medicationRepository.save(medication);
+  }
+
+  @Override
+  public Medication update(Medication medication) {
+      return medicationRepository.update(medication);
+  }
+
+  @Override
+  public Medication delete(Medication medication) {
+      medicationRepository.delete(medication);
+  }
+
+  @Override
   public Medication getById(long id) {
       return medicationRepository.getOne(id);
   }

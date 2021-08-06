@@ -6,25 +6,70 @@ import java.util.*;
 @Entity
 @Table
 public class {{entity.name}} {
-  {% for propertyParts in entity.propertiesPart %}
-      {% for property in propertyParts.properties %}
-        {%- if property.name == "id" %}
+{% if shared %}
+  {% for propertyParts in shared.propertiesPart %}
+    {% for property in propertyParts.properties %}
+      {%- if property.name == "id" %}
       @Id
       @GeneratedValue(strategy=GenerationType.IDENTITY)
       private {{property.type.type|javatype}} {{property.name}};
-         {% else %}
+      {% else %}
 
-    {% for annotation in property.annotations %}
+        {% for annotation in property.annotations %}
       @{{annotation.annotation or "Column"}}
-    {% endfor -%}
-            {% if property.type.type %}
+        {% endfor -%}
+        {% if property.type.type %}
       private {{property.type.type|javatype}} {{property.name}};
-            {% else %}
+        {% else %}
       private List<{{property.type.entity|javatype}}> {{property.name}};
-            {% endif -%}
         {% endif -%}
-      {% endfor -%}
+      {% endif -%}
+    {% endfor %}
+  {% endfor %}
+{% endif %}
+  {% for propertyParts in entity.propertiesPart %}
+    {% for property in propertyParts.properties %}
+      {%- if property.name == "id" %}
+      @Id
+      @GeneratedValue(strategy=GenerationType.IDENTITY)
+      private {{property.type.type|javatype}} {{property.name}};
+      {% else %}
+
+        {% for annotation in property.annotations %}
+      @{{annotation.annotation or "Column"}}
+        {% endfor -%}
+        {% if property.type.type %}
+      private {{property.type.type|javatype}} {{property.name}};
+        {% else %}
+      private List<{{property.type.entity|javatype}}> {{property.name}};
+        {% endif -%}
+      {% endif -%}
+    {% endfor -%}
   {% endfor -%}
+{% if shared %}
+  {% for propertyParts in shared.propertiesPart %}
+    {% for property in propertyParts.properties %}
+       {% if property.type.type %}
+
+      public {{property.type.type|javatype}} get{{property.name|capitalize}}(){
+        return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}({{property.type.type|javatype}} {{property.name}}){
+        this.{{property.name}} = {{property.name}};
+      }
+        {% else %}
+      public List<{{property.type.entity|javatype}}> get{{property.name|capitalize}}(){
+         return this.{{property.name}};
+      }
+
+      public void set{{property.name|capitalize}}(List<{{property.type.entity|javatype}}> {{property.name}}){
+         this.{{property.name}} = {{property.name}};
+      }
+        {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endif %}
   {% for propertyParts in entity.propertiesPart %}
     {% for property in propertyParts.properties %}
        {% if property.type.type %}

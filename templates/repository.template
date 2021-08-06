@@ -6,3 +6,4 @@ import model.{{entity.name}};
 @Repository
 public interface {{entity.name}}Repository extends JpaRepository<{{entity.name}}, Long> {
 }
+

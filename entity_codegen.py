@@ -28,6 +28,7 @@ def main(debug=False):
 
     packages = [
         "model",
+        "dto",
         "repository",
         "controller",
         "service",
@@ -54,9 +55,15 @@ def main(debug=False):
 
         if "model" in template:
             for entity in test_model.entities:
-                # For each entity generate file
-                with open(join(f"{output_root}/model", "%s.java" % entity.name.capitalize()), 'w') as f:
-                    f.write(jinja_template.render(entity=entity))
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
+
+                if shared:
+                    with open(join(f"{output_root}/model", f"{entity.name.capitalize()}.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                else:
+                    with open(join(f"{output_root}/model", f"{entity.name.capitalize()}.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity))
+                    
 
         if "controller" in template:
             for entity in test_model.entities:
@@ -77,21 +84,13 @@ def main(debug=False):
 
         if "dto" in template:
             for entity in test_model.entities:
-                # For each entity generate file
-                with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
-                    f.write(jinja_template.render(entity=entity))
-
-        if "serviceImpl" in template:
-            for entity in test_model.entities:
-                shared = [
-                    x for x in test_model.shared.entities if x.name == entity.name]
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
 
                 if shared:
-                    with open(join(f"{output_root}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
-                        f.write(jinja_template.render(
-                            entity=entity, shared=test_model.shared))
+                    with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
                 else:
-                    with open(join(f"{output_root}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
+                    with open(join(f"{output_root}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
                         f.write(jinja_template.render(entity=entity))
 
         if "service" in template:

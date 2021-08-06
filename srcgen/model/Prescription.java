@@ -11,6 +11,9 @@ public class Prescription {
       private long id;
 
       @Column
+      private String name;
+
+      @Column
       private boolean valid;
 
       @ManyToMany
@@ -22,6 +25,14 @@ public class Prescription {
 
       public void setId(long id){
         this.id = id;
+      }
+
+      public String getName(){
+        return this.name;
+      }
+
+      public void setName(String name){
+        this.name = name;
       }
 
       public boolean getValid(){

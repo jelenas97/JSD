@@ -1,4 +1,4 @@
-package srcgen.model;
+package jsd.tim.model;
 
 import javax.persistence.*;
 import java.util.*;

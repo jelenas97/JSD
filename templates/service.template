@@ -1,7 +1,7 @@
-package srcgen.service;
+package jsd.tim.service;
 
 import java.util.*;
-import srcgen.model.{{entity.name}};
+import jsd.tim.model.*;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,9 +14,21 @@ public interface {{entity.name}}Service {
     {% else %}
     {{operation.type.type.name}} {{operation.name}}({% for param in operation.parameters %}{{param.type.name|capitalize}} {{param.name}}{% endfor %});
     {% endif %}
-
     {% endfor %}
 {% endfor %}
+{% if shared %}
+  {% for operationsPart in shared.operationsPart %}
+    {% for operation in operationsPart.operations %}
+    {% if operation.SAVE  %}
+    {{entity.name}} save({{entity.name|capitalize}} {{entity.name|lower}});
+    {% elif operation.UPDATE %}
+    {{entity.name}} update({{entity.name|capitalize}} {{entity.name|lower}});
+    {% elif operation.DELETE %}
+    void delete({{entity.name|capitalize}} {{entity.name|lower}});
+    {% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endif %}
 
 }
 

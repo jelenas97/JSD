@@ -7,6 +7,8 @@ entity Prescription:
 		medications > [Medication]
 
 	operations:
+	    getById(id : long) Prescription
+		getAll() [Prescription]
 		updateValidity(id : long) bool
 		addMedication(medication : Medication) bool
 		removeMedication(id : long) bool

@@ -1,7 +1,7 @@
-package srcgen.dto;
+package jsd.tim.dto;
 
 import java.util.*;
-import srcgen.model.*;
+import jsd.tim.model.*;
 
 public class {{entity.name}}DTO extends {{entity.name}} {
 {% if shared %}

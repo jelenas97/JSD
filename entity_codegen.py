@@ -21,7 +21,7 @@ def main(debug=False):
             'long': 'long',
             'integer': 'int',
             'string': 'String',
-            'bool': 'boolean'
+            'bool': 'boolean',
         }.get(s.name, s.name)
 
     projectName="medication"
@@ -36,7 +36,8 @@ def main(debug=False):
         folder_structure+"controller",
         folder_structure+"service",
         folder_structure+"service/impl",
-        "resources"
+        "resources",
+        "webapp/WEB-INF/jsp"
     ]
 
     # Create output folder structure
@@ -72,7 +73,7 @@ def main(debug=False):
         if "controller" in template:
             for entity in test_model.entities:
                 shared = [x for x in test_model.shared.entities if x.name == entity.name]
-                
+
                 if shared:
                     with open(join(f"{output_root}{folder_structure}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
                         f.write(jinja_template.render(entity=entity, shared=test_model.shared))
@@ -135,6 +136,48 @@ def main(debug=False):
                 with open(join(f"{output_root}{folder_structure}", f"{projectName.capitalize()}.java"), 'w') as f:
                     f.write(jinja_template.render(projectName=projectName, pack="jsd.tim"))
 
+        if "homeController" in template:
+            for entity in test_model.entities:
+                with open(join(f"{output_root}{folder_structure}/controller", f"HomeController.java"), 'w') as f:
+                    f.write(jinja_template.render(projectName=projectName, pack="jsd.tim"))
+
+        if "navbar" in template:
+            entities = test_model.pages.entities
+            pages = test_model.pages.pagesTypePart
+            with open(join(f"{output_root}webapp/WEB-INF/jsp", f"navbar.jsp"), 'w') as f:
+                f.write(jinja_template.render(entities=entities, pages=pages))
+
+        if "homePage" in template:
+            entities = test_model.pages.entities
+            pages = test_model.pages.pagesTypePart
+            with open(join(f"{output_root}webapp/WEB-INF/jsp", f"homePage.jsp"), 'w') as f:
+                f.write(jinja_template.render(entities=entities, pages=pages))
+
+        if "formJspPage" in template:
+            for entity in test_model.entities:
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
+
+                if shared:
+                    with open(join(f"{output_root}webapp/WEB-INF/jsp",
+                                   f"{entity.name}Form.jsp"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                else:
+                    with open(join(f"{output_root}webapp/WEB-INF/jsp",
+                                   f"{entity.name}Form.jsp"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity))
+
+        if "viewJspPage" in template:
+            for entity in test_model.entities:
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
+
+                if shared:
+                    with open(join(f"{output_root}webapp/WEB-INF/jsp",
+                                   f"{entity.name}View.jsp"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                else:
+                    with open(join(f"{output_root}webapp/WEB-INF/jsp",
+                                   f"{entity.name}View.jsp"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity))
 
 
 if __name__ == "__main__":

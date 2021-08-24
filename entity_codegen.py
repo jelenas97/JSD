@@ -170,14 +170,31 @@ def main(debug=False):
             for entity in test_model.entities:
                 shared = [x for x in test_model.shared.entities if x.name == entity.name]
 
+                pages = test_model.pages.pagesTypePart
+
                 if shared:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}View.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, pages=pages))
                 else:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}View.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity))
+                        f.write(jinja_template.render(entity=entity, pages=pages))
+
+        if "updateFormJspPage" in template:
+            for entity in test_model.entities:
+                shared = [x for x in test_model.shared.entities if x.name == entity.name]
+
+                pages = test_model.pages.pagesTypePart
+
+                if shared:
+                    with open(join(f"{output_root}webapp/WEB-INF/jsp",
+                                   f"{entity.name}UpdateForm.jsp"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, pages=pages))
+                else:
+                    with open(join(f"{output_root}webapp/WEB-INF/jsp",
+                                   f"{entity.name}UpdateForm.jsp"), 'w') as f:
+                        f.write(jinja_template.render(entity=entity, pages=pages))
 
 
 if __name__ == "__main__":

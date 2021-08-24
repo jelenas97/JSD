@@ -32,15 +32,19 @@ public class PrescriptionController{
         return "PrescriptionView";
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Prescription prescription) {
-        try {
-            prescriptionService.update(prescription);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        catch (Exception e){
-            return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping(value = "/update/{id}")
+    public String update(Model model, @PathVariable Long id) {
+        setModel(model, id);
+        Prescription prescription = prescriptionService.getById(id);
+        prescriptionService.delete(prescription);
+        return "PrescriptionUpdateForm";
+    }
+
+    @PostMapping(value = "/update")
+    public String update(@ModelAttribute Prescription prescription, Model model) {
+        prescriptionService.update(prescription);
+        initModel(model);
+        return "PrescriptionView";
     }
 
     @GetMapping(value="/delete/{id}")
@@ -71,5 +75,11 @@ public class PrescriptionController{
     private void initModel(Model model) {
         model.addAttribute("prescription", new PrescriptionDTO());
         model.addAttribute("PrescriptionList", prescriptionService.getAll());
+    }
+
+    private void setModel(Model model, Long id) {
+        PrescriptionDTO toUpdate = new PrescriptionDTO();
+        toUpdate.setId(id);
+        model.addAttribute("prescription", toUpdate);
     }
 }

@@ -11,7 +11,10 @@ public class Prescription {
       private long id;
 
       @Column
-      private String name;
+      private String title;
+
+      @Column
+      private String doctor;
 
       @Column
       private boolean valid;
@@ -27,12 +30,20 @@ public class Prescription {
         this.id = id;
       }
 
-      public String getName(){
-        return this.name;
+      public String getTitle(){
+        return this.title;
       }
 
-      public void setName(String name){
-        this.name = name;
+      public void setTitle(String title){
+        this.title = title;
+      }
+
+      public String getDoctor(){
+        return this.doctor;
+      }
+
+      public void setDoctor(String doctor){
+        this.doctor = doctor;
       }
 
       public boolean getValid(){

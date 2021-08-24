@@ -17,68 +17,59 @@ import jsd.tim.service.PrescriptionService;
 @RequestMapping("/prescription")
 public class PrescriptionController{
 
-	@Autowired
-	private PrescriptionService prescriptionService;
+    @Autowired
+    private PrescriptionService prescriptionService;
+    @GetMapping(value = "/new")
+    public String create(Model model) {
+        initModel(model);
+        return "PrescriptionForm";
+    }
 
-  @GetMapping(value = "/new")
-	public String create(Model model) {
-		initModel(model);
-		return "PrescriptionForm";
-  }
-  
-  @PostMapping
-  public ResponseEntity<Prescription> save(@RequestBody Prescription prescription){
-    try {
+    @PostMapping
+    public String save(@ModelAttribute Prescription prescription, Model model){
         prescriptionService.save(prescription);
-        return new ResponseEntity<>(HttpStatus.OK);
+        initModel(model);
+        return "PrescriptionView";
     }
-    catch(Exception e){
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }    
-  }
 
-  @PutMapping(value = "/{id}")
-  public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Prescription prescription) {
-    try {
-        prescriptionService.update(prescription);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Prescription prescription) {
+        try {
+            prescriptionService.update(prescription);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
+        }
     }
-    catch (Exception e){
-        return new ResponseEntity<>(e.getStackTrace(), HttpStatus.BAD_REQUEST);
-    }
-  }
 
-  @DeleteMapping(value="/{id}")
-  public ResponseEntity<Prescription> delete(@PathVariable Long id) {
-    Prescription prescription = prescriptionService.getById(id);
-    try {
-      prescriptionService.delete(prescription);
-      return new ResponseEntity<>(prescription, HttpStatus.OK);
-    }
-    catch(Exception e) {
-          return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-
-  @GetMapping(value = "/{id}")
-  public ResponseEntity<Prescription> getById(@PathVariable Long id){
-    try {
+    @GetMapping(value="/delete/{id}")
+    public String delete(@PathVariable Long id, Model model) {
         Prescription prescription = prescriptionService.getById(id);
-        return new ResponseEntity<>(prescription, HttpStatus.OK);
+        prescriptionService.delete(prescription);
+        initModel(model);
+        return "PrescriptionView";
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Prescription> getById(@PathVariable Long id){
+        try {
+            Prescription prescription = prescriptionService.getById(id);
+            return new ResponseEntity<>(prescription, HttpStatus.OK);
     }
     catch(Exception e){
-        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }    
-  }
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-  @GetMapping
-  public String getAll(Model model) {
-    initModel(model);
-    return "PrescriptionListView";
-  }
+    @GetMapping
+    public String getAll(Model model) {
+        initModel(model);
+        return "PrescriptionView";
+    }
 
-  private void initModel(Model model) {
-    model.addAttribute("Prescription", new Prescription());
-    model.addAttribute("PrescriptionList", prescriptionService.getAll());
-  }
+    private void initModel(Model model) {
+        model.addAttribute("prescription", new PrescriptionDTO());
+        model.addAttribute("PrescriptionList", prescriptionService.getAll());
+    }
 }

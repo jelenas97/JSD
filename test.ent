@@ -1,13 +1,19 @@
 entity Prescription:
 	properties:
 		{Column}
+		title > string
+
+		{Column}
+		doctor > string
+
+		{Column}
 		valid > bool
 
 		{ManyToMany}
 		medications > [Medication]
 
 	operations:
-	    getById(id : long) Prescription
+	  getById(id : long) Prescription
 		getAll() [Prescription]
 		updateValidity(id : long) bool
 		addMedication(medication : Medication) bool
@@ -18,24 +24,49 @@ entity Medication:
 		{Column}
 		code > string
 
-  operations:
-    getById(id : long) Medication
+		{Column}
+		name > string
+
+		{Column}
+		type > string
+
+		{Column}
+		description > string
+
+	operations:
+		getById(id : long) Medication
 		getAll() [Medication]
 
-shared[Medication, Prescription]:
+
+entity Patient:
+	properties:
+		{Column}
+		firstName > string
+
+		{Column}
+		lastName > string
+
+		{Column}
+		city > string
+
+		{Column}
+		age > string
+
+	operations:
+		getById(id : long) Patient
+		getAll() [Patient]
+
+shared[Medication, Prescription, Patient]:
   properties:
 		{Id}
 		id > long
-
-		{Column}
-		name > string
 
   operations:
     save
     update
     delete
 
-pages[Medication, Prescription]:
+pages[Medication, Prescription, Patient]:
   add
   view
   edit

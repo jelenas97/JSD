@@ -39,7 +39,7 @@ public class {{entity.name}}ServiceImpl implements {{entity.name}}Service {
       {% elif operation.UPDATE %}
   @Override
   public {{entity.name|capitalize}} update({{entity.name|capitalize}} {{entity.name|lower}}) {
-      return {{entity.name|lower}}Repository.update({{entity.name|lower}});
+      return {{entity.name|lower}}Repository.save({{entity.name|lower}});
   }
 
       {% elif operation.DELETE %}

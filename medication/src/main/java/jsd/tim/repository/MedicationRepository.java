@@ -7,5 +7,4 @@ import jsd.tim.model.Medication;
 
 @Repository
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
-    Medication update(Medication medication);
 }

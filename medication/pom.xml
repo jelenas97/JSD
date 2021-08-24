@@ -17,7 +17,7 @@ Changes to this file may cause incorrect behavior and will be lost if the code i
     <relativePath />
     <!-- lookup parent from repository -->
   </parent>
-  <groupId>jsd.tim</groupId>
+  <groupId>tim</groupId>
   <artifactId>Medication</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Medication</name>

@@ -7,6 +7,5 @@ import jsd.tim.model.{{entity.name}};
 
 @Repository
 public interface {{entity.name}}Repository extends JpaRepository<{{entity.name}}, Long> {
-    {{entity.name|capitalize}} update({{entity.name|capitalize}} {{entity.name|lower}});
 }
 

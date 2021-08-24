@@ -22,7 +22,7 @@ public class MedicationServiceImpl implements MedicationService {
 
   @Override
   public Medication update(Medication medication) {
-      return medicationRepository.update(medication);
+      return medicationRepository.save(medication);
   }
 
   @Override

@@ -7,5 +7,4 @@ import jsd.tim.model.Prescription;
 
 @Repository
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
-    Prescription update(Prescription prescription);
 }

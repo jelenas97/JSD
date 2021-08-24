@@ -17,6 +17,7 @@
       <div class="row">
         <div class="col-8 offset-2">
            <form:form method="POST" action="/{{entity.name|lower}}" modelAttribute="{{entity.name|lower}}">
+{% if shared %}
        {% for propertyParts in shared.propertiesPart %}
             {% for property in propertyParts.properties %}
                 {% if property.name != "id" %}
@@ -44,6 +45,7 @@
                 {% endif %}
             {% endfor %}
        {% endfor %}
+{% endif %}
        {% for propertyParts in entity.propertiesPart %}
             {% for property in propertyParts.properties %}
                 {% if property.name != "id"%}

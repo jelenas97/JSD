@@ -15,6 +15,7 @@
             <table class="table table-sm">
                 <thead>
                     <tr>
+  {% if shared %}
                     {% for propertyParts in shared.propertiesPart %}
                         {% for property in propertyParts.properties %}
                     <th>{{property.name|capitalize}}</th>
@@ -36,6 +37,7 @@
                     <td>${ {{entity.name|lower}}.{{property.name}} }</td>
                         {% endfor %}
                     {% endfor %}
+  {% endif %}
                     {% for propertyParts in entity.propertiesPart %}
                         {% for property in propertyParts.properties %}
                     <td>${ {{entity.name|lower}}.{{property.name}} }</td>
@@ -50,6 +52,7 @@
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
+  {% if shared %}
                     {% for propertyParts in shared.propertiesPart %}
                         {% for property in propertyParts.properties %}
                             {% if property.name == "id" %}
@@ -57,6 +60,7 @@
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
+  {% endif %}
                         </button>
                     </td>
                     </tr>

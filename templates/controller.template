@@ -19,7 +19,7 @@ public class {{entity.name}}Controller{
 
     @Autowired
     private {{entity.name}}Service {{entity.name|lower}}Service;
-
+{% if shared %}
     {% for operationsPart in shared.operationsPart %}
         {% for operation in operationsPart.operations %}
           {% if operation.GET_ALL %}
@@ -83,6 +83,7 @@ public class {{entity.name}}Controller{
     {% endif %}
     {% endfor %}
     {% endfor %}
+{% endif %}
     {% for operationsPart in entity.operationsPart %}
         {% for operation in operationsPart.operations %}
             {% if operation.name == "getAll" %}

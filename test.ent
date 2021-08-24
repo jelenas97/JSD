@@ -13,7 +13,7 @@ entity Prescription:
 		medications > [Medication]
 
 	operations:
-	    getById(id : long) Prescription
+	  getById(id : long) Prescription
 		getAll() [Prescription]
 		updateValidity(id : long) bool
 		addMedication(medication : Medication) bool
@@ -41,10 +41,10 @@ entity Medication:
 entity Patient:
 	properties:
 		{Column}
-		firstname > string
+		firstName > string
 
 		{Column}
-		lastname > string
+		lastName > string
 
 		{Column}
 		city > string

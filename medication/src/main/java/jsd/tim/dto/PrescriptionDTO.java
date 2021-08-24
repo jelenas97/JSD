@@ -5,7 +5,8 @@ import jsd.tim.model.*;
 
 public class PrescriptionDTO extends Prescription {
       private long id;
-      private String name;
+      private String title;
+      private String doctor;
       private boolean valid;
       private List<Medication> medications;
 
@@ -17,12 +18,20 @@ public class PrescriptionDTO extends Prescription {
         this.id = id;
       }
 
-      public String getName(){
-        return this.name;
+      public String getTitle(){
+        return this.title;
       }
 
-      public void setName(String name){
-        this.name = name;
+      public void setTitle(String title){
+        this.title = title;
+      }
+
+      public String getDoctor(){
+        return this.doctor;
+      }
+
+      public void setDoctor(String doctor){
+        this.doctor = doctor;
       }
 
       public boolean getValid(){

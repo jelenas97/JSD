@@ -5,8 +5,10 @@ import jsd.tim.model.*;
 
 public class MedicationDTO extends Medication {
       private long id;
-      private String name;
       private String code;
+      private String name;
+      private String type;
+      private String description;
 
       public long getId(){
         return this.id;
@@ -14,6 +16,14 @@ public class MedicationDTO extends Medication {
 
       public void setId(long id){
         this.id = id;
+      }
+
+      public String getCode(){
+        return this.code;
+      }
+
+      public void setCode(String code){
+        this.code = code;
       }
 
       public String getName(){
@@ -24,12 +34,20 @@ public class MedicationDTO extends Medication {
         this.name = name;
       }
 
-      public String getCode(){
-        return this.code;
+      public String getType(){
+        return this.type;
       }
 
-      public void setCode(String code){
-        this.code = code;
+      public void setType(String type){
+        this.type = type;
+      }
+
+      public String getDescription(){
+        return this.description;
+      }
+
+      public void setDescription(String description){
+        this.description = description;
       }
 
 }

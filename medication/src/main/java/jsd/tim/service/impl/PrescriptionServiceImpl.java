@@ -22,7 +22,7 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 
   @Override
   public Prescription update(Prescription prescription) {
-      return prescriptionRepository.update(prescription);
+      return prescriptionRepository.save(prescription);
   }
 
   @Override

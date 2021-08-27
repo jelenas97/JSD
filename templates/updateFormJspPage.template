@@ -17,10 +17,13 @@
 
       <div class="row">
         <div class="col-8 offset-2">
-           <form:form method="POST" action="/{{entity.name|lower}}/update" modelAttribute="{{entity.name|lower}}">
+           <form:form method="POST" action="/{{entity.name|lower}}" modelAttribute="{{entity.name|lower}}">
 {% if shared %}
        {% for propertyParts in shared.propertiesPart %}
             {% for property in propertyParts.properties %}
+                {% if property.name == "id" %}
+                <form:input path="{{property.name}}" type="hidden"/>
+                {% endif %}
                 {% if property.name != "id" %}
                     {% if property.type.type.name == "string" %}
                 <div class="form-group row">
@@ -49,6 +52,9 @@
 {% endif %}
        {% for propertyParts in entity.propertiesPart %}
             {% for property in propertyParts.properties %}
+                {% if property.name == "id" %}
+                <form:input path="{{property.name}}" type="hidden"/>
+                {% endif %}
                 {% if property.name != "id"%}
                     {% if property.type.type.name == "string" %}
                 <div class="form-group row">

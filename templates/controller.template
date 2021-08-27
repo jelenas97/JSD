@@ -61,9 +61,7 @@ public class {{entity.name}}Controller{
     {% if operation.UPDATE %}
     @GetMapping(value = "/update/{id}")
     public String update(Model model, @PathVariable Long id) {
-        setModel(model, id);
-        {{entity.name}} {{entity.name|lower}} = {{entity.name|lower}}Service.getById(id);
-        {{entity.name|lower}}Service.delete({{entity.name|lower}});
+        setUpdateModel(model, id);
         return "{{entity.name}}UpdateForm";
     }
 
@@ -129,9 +127,7 @@ public class {{entity.name}}Controller{
     {% if operation.name == "update" %}
     @GetMapping(value = "/update/{id}")
     public String update(Model model, @PathVariable Long id) {
-        setModel(model, id);
-        {{entity.name}} {{entity.name|lower}} = {{entity.name|lower}}Service.getById(id);
-        {{entity.name|lower}}Service.delete({{entity.name|lower}});
+        setUpdateModel(model, id);
         return "{{entity.name}}UpdateForm";
     }
 
@@ -160,10 +156,20 @@ public class {{entity.name}}Controller{
         model.addAttribute("{{entity.name}}List", {{entity.name|lower}}Service.getAll());
     }
 
-    private void setModel(Model model, Long id) {
-        {{entity.name}}DTO toUpdate = new {{entity.name}}DTO();
-        toUpdate.setId(id);
-        model.addAttribute("{{entity.name|lower}}", toUpdate);
+    private void setUpdateModel(Model model, Long id) {
+        {{entity.name}} {{entity.name|lower}}Entity = {{entity.name|lower}}Service.getById(id);
+        {{entity.name}}DTO {{entity.name|lower}}DTO = new {{entity.name}}DTO();
+        {% for propertyParts in shared.propertiesPart %}
+            {% for property in propertyParts.properties %}
+        {{entity.name|lower}}DTO.set{{property.name|capitalize}}({{entity.name|lower}}Entity.get{{property.name|capitalize}}());
+            {% endfor %}
+        {% endfor %}
+        {% for propertyParts in entity.propertiesPart %}
+            {% for property in propertyParts.properties %}
+        {{entity.name|lower}}DTO.set{{property.name|capitalize}}({{entity.name|lower}}Entity.get{{property.name|capitalize}}());
+            {% endfor %}
+        {% endfor %}
+        model.addAttribute("{{entity.name|lower}}", {{entity.name|lower}}DTO);
     }
 }
 

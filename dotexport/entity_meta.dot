@@ -11,73 +11,66 @@
     edge[dir=black,arrowtail=empty]
 
 
-13151216[ label="{EntityModel|}"]
+14836000[ label="{EntityModel|}"]
 
-11003888[ label="{Entity|name: ID\l}"]
+12574512[ label="{Entity|name: ID\l}"]
 
-13350816[ label="{PropertyPart|}"]
+14825520[ label="{PropertyPart|}"]
 
-13356352[ label="{Property|name: ID\l}"]
+12974240[ label="{Property|name: ID\l}"]
 
-13361888[ label="{Type|}"]
+13706624[ label="{Type|}"]
 
-13367424[ label="{EntityList|}"]
+13699648[ label="{Annotation|}"]
 
-13372960[ label="{Annotation|}"]
+14794976[ label="{AnnotationName|name: ID\l}"]
 
-13112288[ label="{AnnotationName|name: ID\l}"]
+15029728[ label="{*RefferenceType|}"]
 
-13379088[ label="{*RefferenceType|}"]
+14794032[ label="{SimpleType|name: ID\l}"]
 
-13111344[ label="{SimpleType|name: ID\l}"]
+15035264[ label="{OperationPart|}"]
 
-13385216[ label="{OperationPart|}"]
+15040800[ label="{Operation|name: ID\l}"]
 
-13392464[ label="{Operation|name: ID\l}"]
+15048048[ label="{Parameters|name: ID\l}"]
 
-13397408[ label="{Parameters|name: ID\l}"]
+15052992[ label="{Shared|}"]
 
-13359888[ label="{Shared|}"]
+15058528[ label="{SharedOperationsPart|}"]
 
-11008832[ label="{SharedOperationsPart|}"]
+15064064[ label="{SimpleOperation|UPDATE: optional\<BOOL\>\lSAVE: optional\<BOOL\>\lDELETE: optional\<BOOL\>\lGET_BY_ID: optional\<BOOL\>\lGET_ALL: optional\<BOOL\>\l}"]
 
-13342800[ label="{SimpleOperations|SAVE: STRING\lUPDATE: STRING\lDELETE: STRING\lGET_BY_ID: STRING\lGET_ALL: STRING\l}"]
+15070192[ label="{Pages|}"]
 
-13390464[ label="{Entities|}"]
-
-13378144[ label="{Pages|}"]
-
-11398736[ label="{PagesTypePart|VIEW: STRING\lADD: STRING\lEDIT: STRING\lVIEW_DELETE: STRING\l}"]
+15038800[ label="{PagesTypePart|VIEW: optional\<BOOL\>\lADD: optional\<BOOL\>\lEDIT: optional\<BOOL\>\l}"]
 
 
 
-13151216 -> 11003888[arrowtail=diamond, dir=both, headlabel="entities 1..*"]
-13151216 -> 13359888[arrowtail=diamond, dir=both, headlabel="shared 1..*"]
-13151216 -> 13378144[arrowtail=diamond, dir=both, headlabel="pages 1..*"]
-11003888 -> 13350816[arrowtail=diamond, dir=both, headlabel="propertiesPart 0..*"]
-11003888 -> 13385216[arrowtail=diamond, dir=both, headlabel="operationsPart 0..*"]
-13350816 -> 13356352[arrowtail=diamond, dir=both, headlabel="properties 1..*"]
-13356352 -> 13372960[arrowtail=diamond, dir=both, headlabel="annotations 0..*"]
-13356352 -> 13361888[arrowtail=diamond, dir=both, headlabel="type "]
-13361888 -> 13379088[headlabel="type "]
-13361888 -> 13379088[headlabel="entity "]
-13367424 -> 13379088[headlabel="type "]
-13372960 -> 13112288[headlabel="annotation "]
-13379088 -> 13111344 [dir=back]
-13379088 -> 11003888 [dir=back]
-13385216 -> 13392464[arrowtail=diamond, dir=both, headlabel="operations 1..*"]
-13392464 -> 13397408[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
-13392464 -> 13379088[headlabel="type "]
-13397408 -> 13379088[headlabel="type "]
-13397408 -> 13397408[arrowtail=diamond, dir=both, headlabel="parameters 1..*"]
-13359888 -> 13390464[arrowtail=diamond, dir=both, headlabel="entities "]
-13359888 -> 13350816[arrowtail=diamond, dir=both, headlabel="propertiesPart 0..*"]
-13359888 -> 11008832[arrowtail=diamond, dir=both, headlabel="operationsPart 0..*"]
-11008832 -> 13342800[arrowtail=diamond, dir=both, headlabel="operations 0..*"]
-13390464 -> 11003888[headlabel="entity "]
-13390464 -> 13390464[arrowtail=diamond, dir=both, headlabel="entities 1..*"]
-13378144 -> 13390464[arrowtail=diamond, dir=both, headlabel="entities "]
-13378144 -> 11398736[arrowtail=diamond, dir=both, headlabel="pagesTypePart 0..*"]
+14836000 -> 12574512[arrowtail=diamond, dir=both, headlabel="entities 1..*"]
+14836000 -> 15052992[arrowtail=diamond, dir=both, headlabel="shared "]
+14836000 -> 15070192[arrowtail=diamond, dir=both, headlabel="pages "]
+12574512 -> 14825520[arrowtail=diamond, dir=both, headlabel="propertiesPart 0..*"]
+12574512 -> 15035264[arrowtail=diamond, dir=both, headlabel="operationsPart 0..*"]
+14825520 -> 12974240[arrowtail=diamond, dir=both, headlabel="properties 1..*"]
+12974240 -> 13699648[arrowtail=diamond, dir=both, headlabel="annotations 0..*"]
+12974240 -> 13706624[arrowtail=diamond, dir=both, headlabel="type "]
+13706624 -> 15029728[headlabel="type "]
+13706624 -> 15029728[headlabel="entity "]
+13699648 -> 14794976[headlabel="annotation "]
+15029728 -> 14794032 [dir=back]
+15029728 -> 12574512 [dir=back]
+15035264 -> 15040800[arrowtail=diamond, dir=both, headlabel="operations 1..*"]
+15040800 -> 15048048[arrowtail=diamond, dir=both, headlabel="parameters 0..*"]
+15040800 -> 13706624[arrowtail=diamond, dir=both, headlabel="type "]
+15048048 -> 15029728[headlabel="type "]
+15048048 -> 15048048[arrowtail=diamond, dir=both, headlabel="parameters 1..*"]
+15052992 -> 12574512[headlabel="entities 1..*"]
+15052992 -> 14825520[arrowtail=diamond, dir=both, headlabel="propertiesPart 0..*"]
+15052992 -> 15058528[arrowtail=diamond, dir=both, headlabel="operationsPart 0..*"]
+15058528 -> 15064064[arrowtail=diamond, dir=both, headlabel="operations 1..*"]
+15070192 -> 12574512[headlabel="entities 0..*"]
+15070192 -> 15038800[arrowtail=diamond, dir=both, headlabel="pagesTypePart 0..*"]
 match_rules [ shape=plaintext, label=< <table>
 	<tr>
 		<td><b>Comment</b></td><td>\/\/.*$</td>

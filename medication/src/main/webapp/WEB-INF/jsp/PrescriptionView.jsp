@@ -6,7 +6,7 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-4 offset-2 mb-3">
-          <h3 class="">Look at all prescription</h3>
+          <h3 class="">List of all prescription</h3>
         </div>
       </div>
 
@@ -20,6 +20,7 @@
                     <th>Doctor</th>
                     <th>Valid</th>
                     <th>Medications</th>
+                    <th class="text-right">Update</th>
                     <th class="text-right">Delete</th>
                     </tr>
                 </thead>
@@ -31,10 +32,20 @@
                     <td>${ prescription.doctor }</td>
                     <td>${ prescription.valid }</td>
                     <td>${ prescription.medications }</td>
+
+                          <td class="text-right">
+                              <button class="btn btn-sm">
+
+                                        <a href="/prescription/update/${ prescription.id }">Update</a>
+                            </button>
+                          </td>
+
+
                     <td class="text-right">
-                        <button class="btn btn-sm">
+                      <button class="btn btn-sm">
+  
                             <a href="/prescription/delete/${ prescription.id }">Delete</a>
-                        </button>
+                      </button>
                     </td>
                     </tr>
                     </c:forEach>

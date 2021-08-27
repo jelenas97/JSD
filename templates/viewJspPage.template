@@ -6,7 +6,7 @@
     <div class="container mt-5">
       <div class="row">
         <div class="col-4 offset-2 mb-3">
-          <h3 class="">Look at all {{entity.name|lower}}</h3>
+          <h3 class="">List of all {{entity.name|lower}}</h3>
         </div>
       </div>
 
@@ -26,6 +26,11 @@
                     <th>{{property.name|capitalize}}</th>
                         {% endfor %}
                     {% endfor %}
+                    {% for page in pages %}
+                        {% if page.EDIT %}
+                    <th class="text-right">Update</th>
+                        {% endif %}
+                    {% endfor %}
                     <th class="text-right">Delete</th>
                     </tr>
                 </thead>
@@ -43,16 +48,45 @@
                     <td>${ {{entity.name|lower}}.{{property.name}} }</td>
                         {% endfor %}
                     {% endfor %}
+
+                    {% for page in pages %}
+                        {% if page.EDIT %}
+                          <td class="text-right">
+                              <button class="btn btn-sm">
+                          {% for propertyParts in entity.propertiesPart %}
+                              {% for property in propertyParts.properties %}
+                                  {% if property.name == "id" %}
+                                      <a href="/{{entity.name|lower}}/update/${ {{entity.name|lower}}.{{property.name}} }">Update</a>
+                                  {% endif %}
+                              {% endfor %}
+                          {% endfor %}
+
+                          {% if shared %}
+                            {% for propertyParts in shared.propertiesPart %}
+                                {% for property in propertyParts.properties %}
+                                    {% if property.name == "id" %}
+                                        <a href="/{{entity.name|lower}}/update/${ {{entity.name|lower}}.{{property.name}} }">Update</a>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                          {% endif %}
+                            </button>
+                          </td>
+
+                        {% endif %}
+                    {% endfor %}
+
                     <td class="text-right">
-                        <button class="btn btn-sm">
+                      <button class="btn btn-sm">
                     {% for propertyParts in entity.propertiesPart %}
                         {% for property in propertyParts.properties %}
                             {% if property.name == "id" %}
-                            <a href="/{{entity.name}}/delete/${ {{entity.name|lower}}.{{property.name}} }">Delete</a>
+                            <a href="/{{entity.name|lower}}/delete/${ {{entity.name|lower}}.{{property.name}} }">Delete</a>
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
-  {% if shared %}
+  
+                  {% if shared %}
                     {% for propertyParts in shared.propertiesPart %}
                         {% for property in propertyParts.properties %}
                             {% if property.name == "id" %}
@@ -60,8 +94,8 @@
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
-  {% endif %}
-                        </button>
+                  {% endif %}
+                      </button>
                     </td>
                     </tr>
                     </c:forEach>

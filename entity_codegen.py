@@ -3,6 +3,7 @@ from os.path import dirname, join, sep
 import glob
 import jinja2
 from entity_test import get_entity_mm
+from datetime import datetime
 
 
 def main(debug=False):
@@ -64,10 +65,10 @@ def main(debug=False):
 
                 if shared:
                     with open(join(f"{output_root}{folder_structure}/model", f"{entity.name.capitalize()}.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}{folder_structure}/model", f"{entity.name.capitalize()}.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity))
+                        f.write(jinja_template.render(entity=entity, time=datetime.now()))
                     
 
         if "controller" in template:
@@ -76,16 +77,16 @@ def main(debug=False):
 
                 if shared:
                     with open(join(f"{output_root}{folder_structure}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}{folder_structure}/controller", f"{entity.name.capitalize()}Controller.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity))
+                        f.write(jinja_template.render(entity=entity, time=datetime.now()))
 
         if "repository" in template:
             for entity in test_model.entities:
                 # For each entity generate file
                 with open(join(f"{output_root}{folder_structure}/repository", f"{entity.name.capitalize()}Repository.java"), 'w') as f:
-                    f.write(jinja_template.render(entity=entity))
+                    f.write(jinja_template.render(entity=entity, time=datetime.now()))
 
         if "dto" in template:
             for entity in test_model.entities:
@@ -93,10 +94,10 @@ def main(debug=False):
 
                 if shared:
                     with open(join(f"{output_root}{folder_structure}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}{folder_structure}/dto", f"{entity.name.capitalize()}DTO.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity))
+                        f.write(jinja_template.render(entity=entity, time=datetime.now()))
 
         if "service" in template:
             for entity in test_model.entities:
@@ -104,10 +105,10 @@ def main(debug=False):
 
                 if shared:
                     with open(join(f"{output_root}{folder_structure}/service", f"{entity.name.capitalize()}Service.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}{folder_structure}/service", f"{entity.name.capitalize()}Service.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity))
+                        f.write(jinja_template.render(entity=entity, time=datetime.now()))
 
         if "implService" in template:
             for entity in test_model.entities:
@@ -115,21 +116,21 @@ def main(debug=False):
 
                 if shared:
                     with open(join(f"{output_root}{folder_structure}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}{folder_structure}/service/impl", f"{entity.name.capitalize()}ServiceImpl.java"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity))
+                        f.write(jinja_template.render(entity=entity, time=datetime.now()))
 
         
         if "appProperties" in template:
             for entity in test_model.entities:
                 with open(join(f"{output_root}/resources", f"application.properties"), 'w') as f:
-                    f.write(jinja_template.render(entity=entity, projectName=projectName))
+                    f.write(jinja_template.render(entity=entity, projectName=projectName, time=datetime.now()))
 
         if "pomFile" in template:
             for entity in test_model.entities:
                 with open(join(f"{projectName}/", f"pom.xml"), 'w') as f:
-                    f.write(jinja_template.render(entity=entity,projectName=projectName))
+                    f.write(jinja_template.render(entity=entity,projectName=projectName, time=datetime.now()))
 
         if "mainClass" in template:
             for entity in test_model.entities:
@@ -139,19 +140,19 @@ def main(debug=False):
         if "homeController" in template:
             for entity in test_model.entities:
                 with open(join(f"{output_root}{folder_structure}/controller", f"HomeController.java"), 'w') as f:
-                    f.write(jinja_template.render(projectName=projectName, pack="jsd.tim"))
+                    f.write(jinja_template.render(projectName=projectName, pack="jsd.tim", time=datetime.now()))
 
         if "navbar" in template:
             entities = test_model.pages.entities
             pages = test_model.pages.pagesTypePart
             with open(join(f"{output_root}webapp/WEB-INF/jsp", f"navbar.jsp"), 'w') as f:
-                f.write(jinja_template.render(entities=entities, pages=pages))
+                f.write(jinja_template.render(entities=entities, pages=pages, time=datetime.now()))
 
         if "homePage" in template:
             entities = test_model.pages.entities
             pages = test_model.pages.pagesTypePart
             with open(join(f"{output_root}webapp/WEB-INF/jsp", f"homePage.jsp"), 'w') as f:
-                f.write(jinja_template.render(entities=entities, pages=pages))
+                f.write(jinja_template.render(entities=entities, pages=pages, time=datetime.now()))
 
         if "formJspPage" in template:
             for entity in test_model.entities:
@@ -160,11 +161,11 @@ def main(debug=False):
                 if shared:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}Form.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}Form.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity))
+                        f.write(jinja_template.render(entity=entity, time=datetime.now()))
 
         if "viewJspPage" in template:
             for entity in test_model.entities:
@@ -175,11 +176,11 @@ def main(debug=False):
                 if shared:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}View.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, pages=pages))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, pages=pages, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}View.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, pages=pages))
+                        f.write(jinja_template.render(entity=entity, pages=pages, time=datetime.now()))
 
         if "updateFormJspPage" in template:
             for entity in test_model.entities:
@@ -190,11 +191,11 @@ def main(debug=False):
                 if shared:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}UpdateForm.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, pages=pages))
+                        f.write(jinja_template.render(entity=entity, shared=test_model.shared, pages=pages, time=datetime.now()))
                 else:
                     with open(join(f"{output_root}webapp/WEB-INF/jsp",
                                    f"{entity.name}UpdateForm.jsp"), 'w') as f:
-                        f.write(jinja_template.render(entity=entity, pages=pages))
+                        f.write(jinja_template.render(entity=entity, pages=pages, time=datetime.now()))
 
 
 if __name__ == "__main__":

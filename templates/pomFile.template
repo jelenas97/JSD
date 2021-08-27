@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 [${.now}]
-This file was generated based on the template "${.current_template_name}".
+This file was generated based on the template pomFile.template at {{time}}.
 Changes to this file may cause incorrect behavior and will be lost if the code is regenerated.
 -->
 <project

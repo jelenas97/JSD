@@ -5,9 +5,7 @@ from textx import metamodel_from_file
 from textx.export import metamodel_export, model_export
 from metamodel import SimpleType, AnnotationName
 
-
 this_folder = dirname(__file__)
-
 
 def get_entity_mm(debug=False):
     """

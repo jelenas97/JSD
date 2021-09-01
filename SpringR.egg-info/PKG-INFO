@@ -1,0 +1,15 @@
+Metadata-Version: 2.1
+Name: springR
+Version: 0.0.1
+Summary: Spring Boot CRUD app generator
+Home-page: https://github.com/jelenas97/JSD
+Author: Tim 5
+License: MIT
+Keywords: DSL,Java Spring Boot,Entity
+Platform: UNKNOWN
+Classifier: Development Status :: 2 - Pre-Alpha
+Classifier: Intended Audience :: Developers
+Description-Content-Type: text/markdown
+
+file: README.md
+

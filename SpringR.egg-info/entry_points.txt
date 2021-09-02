@@ -1,7 +1,0 @@
-[textx_generators]
-springr_app = springr_generator.generator:app_generator
-springr_dot = springr_generator.model:dot_generator
-
-[textx_languages]
-springr_language = springr_generator.model:springr_language
-

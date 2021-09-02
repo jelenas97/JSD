@@ -1,6 +1,8 @@
 from os import makedirs
 from os.path import dirname, join
 import glob
+from pathlib import Path
+
 import jinja2
 from springr_generator.model import get_entity_mm
 from datetime import datetime
@@ -10,7 +12,7 @@ from textx import generator
 def generate_folders(root):
     output_root = root + "/src/main/"
     package = "jsd/tim/"
-    folder_structure = "java/" + package
+    folder_structure =  "java/" + package
 
     packages = [
         folder_structure+"model",
@@ -27,16 +29,16 @@ def generate_folders(root):
     [makedirs(f"{output_root}/{package}", exist_ok=True)
      for package in packages]
 
-    return folder_structure
+
+    return folder_structure, output_root
 
 
-def app_generator(model_path, output_root, project_name):
-    this_folder = dirname(__file__)
-
-    entity_mm = get_entity_mm()
+def app_generation(model, output_path, project_name):
+    this_folder = Path(__file__).parent.parent
 
     # Build model from file
-    test_model = entity_mm.model_from_file(model_path)
+    test_model = model
+
 
     def javatype(s):
         """
@@ -56,17 +58,17 @@ def app_generator(model_path, output_root, project_name):
 
     jinja_env.filters['javatype'] = javatype
 
-    folder_structure = generate_folders(output_root)
+    folder_structure, output_root = generate_folders(project_name)
 
     print("Generating app... Output folder: " + output_root +
           " Folder structure: " + folder_structure)
-
-    for template in glob.glob("templates/*.template"):
+    for template in glob.glob("springr_generator/templates/*.template"):
         # Load a template
         jinja_template = jinja_env.get_template(template.replace("\\", "/"))
 
         if "model" in template:
             for entity in test_model.entities:
+
                 shared = [
                     x for x in test_model.shared.entities if x.name == entity.name]
 
@@ -150,7 +152,7 @@ def app_generator(model_path, output_root, project_name):
 
         if "pomFile" in template:
             for entity in test_model.entities:
-                with open(join(f"{output_root}/", f"pom.xml"), 'w') as f:
+                with open(join(f"{project_name}/", f"pom.xml"), 'w') as f:
                     f.write(jinja_template.render(entity=entity,
                             projectName=project_name, time=datetime.now()))
 
@@ -161,10 +163,9 @@ def app_generator(model_path, output_root, project_name):
                         projectName=project_name, pack="jsd.tim"))
 
         if "homeController" in template:
-            for entity in test_model.entities:
-                with open(join(f"{output_root}{folder_structure}/controller", f"HomeController.java"), 'w') as f:
-                    f.write(jinja_template.render(
-                        projectName=project_name, pack="jsd.tim", time=datetime.now()))
+            with open(join(f"{output_root}{folder_structure}/controller", f"HomeController.java"), 'w') as f:
+                f.write(jinja_template.render(
+                    projectName=project_name, pack="jsd.tim", time=datetime.now()))
 
         if "navbar" in template:
             entities = test_model.pages.entities
@@ -237,10 +238,10 @@ def app_generator(model_path, output_root, project_name):
 def app_generator(metamodel, model, output_path, overwrite, debug, **custom_args):
     '''Generate full-stack Spring Boot/JSP app'''
     try:
-        if output_path.includes("/"):
+        if "/" in output_path:
             project_name = output_path.split("/")[0]
         else:
             project_name = output_path
-        app_generator(model, output_path, project_name)
+        app_generation(model, output_path, project_name)
     except Exception as e:
-        print("App generator failed due to: \n\n" + e)
+        print("App generator failed due to: \n\n" + e.__str__())

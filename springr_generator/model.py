@@ -59,9 +59,9 @@ def springr_language():
     return get_entity_mm()
 
 @generator("springr_language", "Dot")
-def dot_generator(model_path, output_path):
+def dot_generator(metamodel, model, output_path, overwrite, debug, **custom_args):
     '''Generating dot visualizations from SpringR grammars'''
     try:
-        dot_model_export(model_path, output_path)
+        dot_model_export(model, output_path)
     except Exception as e:
         print("Dot generator failed due to: \n\n" + e)

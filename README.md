@@ -104,5 +104,8 @@ Instalirati sve dependency-je navedene u `requirements.txt` pokretanjem komande:
 pipenv install
 ```
 
+Generisati projekat pokretanjem narednih komandi:
 ```bash
+pip install -e JSD
+textx generate test.ent --target App -o medication
 ```
